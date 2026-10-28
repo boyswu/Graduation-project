@@ -1,0 +1,201 @@
+{
+  "date": "2026-10-28",
+  "scope": "public samples; not a live human end-to-end latency test",
+  "frontend_regression": {
+    "passed": 33,
+    "duration_seconds": 59.1
+  },
+  "controller_regression": {
+    "baseline_bottom_row_refresh_ratio": 0,
+    "patched_profiles": [
+      {
+        "profile": "fast",
+        "camera_refresh_ratio": 1,
+        "static_text_and_garment_prefix_reused": true
+      },
+      {
+        "profile": "balanced",
+        "camera_refresh_ratio": 1,
+        "static_text_and_garment_prefix_reused": true
+      },
+      {
+        "profile": "detail",
+        "camera_refresh_ratio": 1,
+        "static_text_and_garment_prefix_reused": true
+      }
+    ],
+    "source": "installed FluxRT UpdateController; configure_profile extracted from the actual patched server; CPU tensors"
+  },
+  "remote": {
+    "gpu": "RTX 5090",
+    "server_sha256": "a35aec7100bbc548bbcbf2d27492241a552f5bfd0ae0dd8edb0e5f744d8674b2",
+    "camera_cache_policy": "refresh-all-camera-tokens"
+  },
+  "controlled_comparison": {
+    "input": "existing public graduation comparison image; translated person and pose changes",
+    "garment": "neural-look-03",
+    "generation_profile": "fast",
+    "steps": 2,
+    "smoothing": false,
+    "frames": 10,
+    "exclude_first_frame_from_medians": true,
+    "before_warm_inference_median_ms": 136.24530704692006,
+    "after_warm_inference_median_ms": 139.54039104282856,
+    "before": [
+      {
+        "id": 1,
+        "inference_ms": 201.8616470741108,
+        "service_ms": 210.11037903372198
+      },
+      {
+        "id": 2,
+        "inference_ms": 71.97038095910102,
+        "service_ms": 80.99712803959846
+      },
+      {
+        "id": 3,
+        "inference_ms": 136.24530704692006,
+        "service_ms": 145.62487497460097
+      },
+      {
+        "id": 4,
+        "inference_ms": 137.18669791705906,
+        "service_ms": 145.86506795603782
+      },
+      {
+        "id": 5,
+        "inference_ms": 137.96275900676847,
+        "service_ms": 146.7348710866645
+      },
+      {
+        "id": 6,
+        "inference_ms": 141.17680105846375,
+        "service_ms": 150.39283293299377
+      },
+      {
+        "id": 7,
+        "inference_ms": 204.9185410141945,
+        "service_ms": 213.9984070090577
+      },
+      {
+        "id": 8,
+        "inference_ms": 122.50394304282963,
+        "service_ms": 130.90776896569878
+      },
+      {
+        "id": 9,
+        "inference_ms": 125.3837610129267,
+        "service_ms": 133.8462650310248
+      },
+      {
+        "id": 10,
+        "inference_ms": 122.45012202765793,
+        "service_ms": 131.1725890263915
+      }
+    ],
+    "after": [
+      {
+        "id": 1,
+        "inference_ms": 679.8473621020094,
+        "service_ms": 689.9572830880061,
+        "camera_refresh_ratio": 1
+      },
+      {
+        "id": 2,
+        "inference_ms": 171.42409004736692,
+        "service_ms": 179.66227605938911,
+        "camera_refresh_ratio": 1
+      },
+      {
+        "id": 3,
+        "inference_ms": 150.7444140734151,
+        "service_ms": 159.37122597824782,
+        "camera_refresh_ratio": 1
+      },
+      {
+        "id": 4,
+        "inference_ms": 139.11538990214467,
+        "service_ms": 147.6869690231979,
+        "camera_refresh_ratio": 1
+      },
+      {
+        "id": 5,
+        "inference_ms": 139.54039104282856,
+        "service_ms": 147.89301890414208,
+        "camera_refresh_ratio": 1
+      },
+      {
+        "id": 6,
+        "inference_ms": 139.44919302593917,
+        "service_ms": 147.8452569572255,
+        "camera_refresh_ratio": 1
+      },
+      {
+        "id": 7,
+        "inference_ms": 141.96736400481313,
+        "service_ms": 150.54536401294172,
+        "camera_refresh_ratio": 1
+      },
+      {
+        "id": 8,
+        "inference_ms": 139.74280701950192,
+        "service_ms": 148.09839008376002,
+        "camera_refresh_ratio": 1
+      },
+      {
+        "id": 9,
+        "inference_ms": 139.16038791649044,
+        "service_ms": 147.30488194618374,
+        "camera_refresh_ratio": 1
+      },
+      {
+        "id": 10,
+        "inference_ms": 139.24681802745908,
+        "service_ms": 147.4280470283702,
+        "camera_refresh_ratio": 1
+      }
+    ],
+    "observation": "No face print or large frozen clothing was reproduced in this public sequence in either version; the chest print still appears on the back in both. This does not establish that the reported live artifacts are resolved."
+  },
+  "profile_smoke": [
+    {
+      "profile": "balanced",
+      "width": 384,
+      "height": 384,
+      "camera_refresh_ratio": 1,
+      "inference_ms": 252.7235250454396
+    },
+    {
+      "profile": "detail",
+      "width": 512,
+      "height": 512,
+      "camera_refresh_ratio": 1,
+      "inference_ms": 349.13474996574223
+    }
+  ],
+  "limitations": [
+    "Actual user camera movement and face contamination require one live follow-up.",
+    "The model can still produce semantic clothing/identity errors.",
+    "Full camera refresh has a measured compute cost; no FPS improvement is claimed."
+  ],
+  "deployment_state": "rolled_back",
+  "rollback": {
+    "date": "2026-10-28",
+    "reason": "User reported worse stuttering and requested rollback",
+    "restored_remote_sha256": "e002d37290ba4af7cb25f411203cfe72a9a1091a0c605f22e1311c7cb705c646",
+    "restored_components": [
+      "adaptive camera spatial cache",
+      "previous desynchronized canvas presentation",
+      "previous full-frame test suite"
+    ],
+    "remote_ready": true,
+    "regression": {
+      "initial_passed": 31,
+      "initial_failed": 1,
+      "failure": "390px layout resource load net::ERR_ADDRESS_IN_USE",
+      "isolated_retry_passed": 1,
+      "isolated_retry_seconds": 2.6
+    },
+    "note": "All original full-refresh measurements above describe the reverted trial, not the current deployment. Live artifacts remain unresolved."
+  }
+}

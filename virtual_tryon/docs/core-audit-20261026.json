@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-26",
+  "scope": "Diagnosis, static full-output comparison, smoothing correction; streaming generation core not rebuilt",
+  "actual_browser_same_input": [
+    {
+      "steps": 8,
+      "inference_ms": 550.079695880413,
+      "http_ms": 2825.5
+    },
+    {
+      "steps": 50,
+      "inference_ms": 2731.6254912875593,
+      "http_ms": 4042.4000000953674
+    }
+  ],
+  "legacy_narrow_mask": [
+    {
+      "steps": 8,
+      "http_ms": 8506.86650024727,
+      "timings": {
+        "preprocess": 59.73263783380389,
+        "encode": 67.68666068091989,
+        "denoise": 413.23065804317594,
+        "decode": 47.433332074433565,
+        "layer": 6.1797890812158585,
+        "total": 594.6279279887676,
+        "per_step": 51.65383225539699,
+        "garment_cache_hit": false
+      },
+      "width": 512,
+      "height": 768,
+      "cfg": 2.5,
+      "seed": 42
+    },
+    {
+      "steps": 20,
+      "http_ms": 6697.599399834871,
+      "timings": {
+        "preprocess": 60.801479034125805,
+        "encode": 37.27797931060195,
+        "denoise": 1035.438050981611,
+        "decode": 47.86048596724868,
+        "layer": 6.255871616303921,
+        "total": 1187.972899992019,
+        "per_step": 51.77190254908055,
+        "garment_cache_hit": true
+      },
+      "width": 512,
+      "height": 768,
+      "cfg": 2.5,
+      "seed": 42
+    },
+    {
+      "steps": 50,
+      "http_ms": 8628.4603998065,
+      "timings": {
+        "preprocess": 60.46018470078707,
+        "encode": 40.88094178587198,
+        "denoise": 2590.3361388482153,
+        "decode": 47.504079062491655,
+        "layer": 6.215461995452642,
+        "total": 2745.791031047702,
+        "per_step": 51.80672277696431,
+        "garment_cache_hit": true
+      },
+      "width": 512,
+      "height": 768,
+      "cfg": 2.5,
+      "seed": 42
+    }
+  ],
+  "filter_step_test": {
+    "displacement_px": 192,
+    "stage": "module-only, normalized coordinates, response 0.58; excludes camera and display",
+    "samples": [
+      {
+        "tracking_hz": 14,
+        "old_t90_ms": 214.2857,
+        "new_t90_ms": 71.4286
+      },
+      {
+        "tracking_hz": 18,
+        "old_t90_ms": 166.6667,
+        "new_t90_ms": 55.5556
+      }
+    ],
+    "stationary_synthetic_jitter_rms_px_18hz": {
+      "old": 0.563074,
+      "new": 0.571329
+    }
+  },
+  "limits": [
+    "Single-frame model plus skinning does not generate changed poses or new occlusion",
+    "Legacy narrow mask is not the browser capture mask",
+    "50 steps improve this example but do not recover all target garment details",
+    "No real-human motion-to-photon measurement in this session"
+  ]
+}

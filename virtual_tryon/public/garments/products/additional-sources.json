@@ -1,0 +1,47 @@
+[
+  {
+    "candidate": "cat-upper",
+    "source_url": "https://raw.githubusercontent.com/Zheng-Chong/CatVTON/999bdbe81e6008a3f5749af7c1e0b0fa3d21b48e/resource/demo/example/condition/upper/23255574_53383833_1000.jpg",
+    "source_repo": "Zheng-Chong/CatVTON",
+    "commit": "999bdbe81e6008a3f5749af7c1e0b0fa3d21b48e",
+    "bytes": 93984,
+    "sha256": "332036128caffe010e377f7ecb1852791804c53ebc4865d377339b9762c6689f",
+    "asset": "/garments/products/look-04.jpg"
+  },
+  {
+    "candidate": "04469",
+    "source_url": "https://raw.githubusercontent.com/yisol/IDM-VTON/0d5f3ec2d737487a9bb24e4100936ad254780383/gradio_demo/example/cloth/04469_00.jpg",
+    "source_repo": "yisol/IDM-VTON",
+    "commit": "0d5f3ec2d737487a9bb24e4100936ad254780383",
+    "bytes": 149479,
+    "sha256": "eb462f22f2bf55ea434e8a9593b3a8205c6261cf6b0c6c5cba84e62290124d27",
+    "asset": "/garments/products/look-05.jpg"
+  },
+  {
+    "candidate": "09133",
+    "source_url": "https://raw.githubusercontent.com/yisol/IDM-VTON/0d5f3ec2d737487a9bb24e4100936ad254780383/gradio_demo/example/cloth/09133_00.jpg",
+    "source_repo": "yisol/IDM-VTON",
+    "commit": "0d5f3ec2d737487a9bb24e4100936ad254780383",
+    "bytes": 77995,
+    "sha256": "22d5ba1b636f4e0e24a9b5a16625e9274f6d9e44d1431b9aba2d67228773ada9",
+    "asset": "/garments/products/look-06.jpg"
+  },
+  {
+    "candidate": "09163",
+    "source_url": "https://raw.githubusercontent.com/yisol/IDM-VTON/0d5f3ec2d737487a9bb24e4100936ad254780383/gradio_demo/example/cloth/09163_00.jpg",
+    "source_repo": "yisol/IDM-VTON",
+    "commit": "0d5f3ec2d737487a9bb24e4100936ad254780383",
+    "bytes": 52704,
+    "sha256": "8a7b5dff290294c6697069004824edf29c94930aa3dacff9de179a772ecc1c5b",
+    "asset": "/garments/products/look-07.jpg"
+  },
+  {
+    "candidate": "09236",
+    "source_url": "https://raw.githubusercontent.com/yisol/IDM-VTON/0d5f3ec2d737487a9bb24e4100936ad254780383/gradio_demo/example/cloth/09236_00.jpg",
+    "source_repo": "yisol/IDM-VTON",
+    "commit": "0d5f3ec2d737487a9bb24e4100936ad254780383",
+    "bytes": 67644,
+    "sha256": "de649c5d838a7ab7b9aea62a794de4f623b20f28c241b1711cd9e04b654e3bdb",
+    "asset": "/garments/products/look-08.jpg"
+  }
+]

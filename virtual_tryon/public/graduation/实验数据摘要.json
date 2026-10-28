@@ -1,0 +1,323 @@
+{
+  "measurement_date": "2026-10-26",
+  "evidence_type": "historical_human_camera",
+  "source": "docs/architecture-reassessment-20261026.json",
+  "trace_id": "d5e1b52a-1004-4b2d-8e21-b292d78974c3",
+  "count": 30,
+  "output_size": [
+    320,
+    320
+  ],
+  "smoothing": false,
+  "p50_ms": 490.59999990463257,
+  "p95_ms": 844.5999999046326,
+  "max_ms": 1037,
+  "inference_p50_ms": 122.25219851825386,
+  "service_p50_ms": 130.7198685244657,
+  "capture_p50_ms": 4.949999809265137,
+  "paired_residual_p50_ms": 303.6742274607532,
+  "observed_original_display_fps": 4.773976887442018,
+  "limitation": "Historical results, not a new GPU benchmark. Residual includes transport, buffering and dispatch. Stage medians cannot be added.",
+  "raw_frames": [
+    {
+      "frame_id": 1,
+      "client_at_ms": 19746.300000190735,
+      "total_ms": 573.7000002861023,
+      "inference_ms": 199.27057495806366,
+      "service_ms": 207.39149302244186,
+      "capture_encode_ms": 6.900000095367432,
+      "queue_ms": 0.3589320695027709,
+      "display_buffer_ms": 12.5
+    },
+    {
+      "frame_id": 3,
+      "client_at_ms": 19869.099999904633,
+      "total_ms": 467.69999980926514,
+      "inference_ms": 133.69321101345122,
+      "service_ms": 142.2894449206069,
+      "capture_encode_ms": 5.599999904632568,
+      "queue_ms": 18.57391302473843,
+      "display_buffer_ms": 5.799999713897705
+    },
+    {
+      "frame_id": 5,
+      "client_at_ms": 20264.900000095367,
+      "total_ms": 617.4000000953674,
+      "inference_ms": 135.51524002104998,
+      "service_ms": 144.15474003180861,
+      "capture_encode_ms": 7.300000190734863,
+      "queue_ms": 39.865418104454875,
+      "display_buffer_ms": 18.09999990463257
+    },
+    {
+      "frame_id": 6,
+      "client_at_ms": 20510.800000190735,
+      "total_ms": 743.5,
+      "inference_ms": 136.22277800459415,
+      "service_ms": 144.6660419460386,
+      "capture_encode_ms": 6.599999904632568,
+      "queue_ms": 77.8315799543634,
+      "display_buffer_ms": 1.9000000953674316
+    },
+    {
+      "frame_id": 8,
+      "client_at_ms": 20603.200000286102,
+      "total_ms": 614.3000001907349,
+      "inference_ms": 135.5760630685836,
+      "service_ms": 143.85204296559095,
+      "capture_encode_ms": 5.099999904632568,
+      "queue_ms": 19.14919202681631,
+      "display_buffer_ms": 15.200000286102295
+    },
+    {
+      "frame_id": 12,
+      "client_at_ms": 21432.900000095367,
+      "total_ms": 844.5999999046326,
+      "inference_ms": 125.10784296318889,
+      "service_ms": 133.62894405145198,
+      "capture_encode_ms": 5.799999713897705,
+      "queue_ms": 78.12859793193638,
+      "display_buffer_ms": 22
+    },
+    {
+      "frame_id": 13,
+      "client_at_ms": 21734.200000286102,
+      "total_ms": 325.30000019073486,
+      "inference_ms": 126.26487901434302,
+      "service_ms": 134.615843067877,
+      "capture_encode_ms": 7.400000095367432,
+      "queue_ms": 0.3682150272652507,
+      "display_buffer_ms": 19.600000381469727
+    },
+    {
+      "frame_id": 14,
+      "client_at_ms": 21820.400000095367,
+      "total_ms": 297.69999980926514,
+      "inference_ms": 115.5847100308165,
+      "service_ms": 123.80266399122775,
+      "capture_encode_ms": 4.599999904632568,
+      "queue_ms": 24.225984001532197,
+      "display_buffer_ms": 1.4000000953674316
+    },
+    {
+      "frame_id": 15,
+      "client_at_ms": 21959,
+      "total_ms": 324.90000009536743,
+      "inference_ms": 107.85859997849911,
+      "service_ms": 116.24743998982012,
+      "capture_encode_ms": 6.400000095367432,
+      "queue_ms": 36.02286800742149,
+      "display_buffer_ms": 8.799999713897705
+    },
+    {
+      "frame_id": 16,
+      "client_at_ms": 22327,
+      "total_ms": 579.4000000953674,
+      "inference_ms": 113.85419801808894,
+      "service_ms": 122.01890093274415,
+      "capture_encode_ms": 4.599999904632568,
+      "queue_ms": 43.21120691020042,
+      "display_buffer_ms": 11.300000190734863
+    },
+    {
+      "frame_id": 17,
+      "client_at_ms": 22378.5,
+      "total_ms": 516.2999997138977,
+      "inference_ms": 125.48706494271755,
+      "service_ms": 134.2507021035999,
+      "capture_encode_ms": 4.699999809265137,
+      "queue_ms": 44.03748502954841,
+      "display_buffer_ms": 21.40000009536743
+    },
+    {
+      "frame_id": 19,
+      "client_at_ms": 22904.5,
+      "total_ms": 804.0999999046326,
+      "inference_ms": 122.12928698863834,
+      "service_ms": 130.28151204343885,
+      "capture_encode_ms": 5.900000095367432,
+      "queue_ms": 72.62150594033301,
+      "display_buffer_ms": 1.799999713897705
+    },
+    {
+      "frame_id": 22,
+      "client_at_ms": 23476.900000095367,
+      "total_ms": 1037,
+      "inference_ms": 129.18345408979803,
+      "service_ms": 137.36001506913453,
+      "capture_encode_ms": 4.699999809265137,
+      "queue_ms": 7.6854199869558215,
+      "display_buffer_ms": 18.700000286102295
+    },
+    {
+      "frame_id": 23,
+      "client_at_ms": 23604.200000286102,
+      "total_ms": 701.0999999046326,
+      "inference_ms": 135.10685390792787,
+      "service_ms": 143.5228759655729,
+      "capture_encode_ms": 4.5,
+      "queue_ms": 0.41849096305668354,
+      "display_buffer_ms": 19.199999809265137
+    },
+    {
+      "frame_id": 24,
+      "client_at_ms": 23668.200000286102,
+      "total_ms": 654.0999999046326,
+      "inference_ms": 130.12677803635597,
+      "service_ms": 138.25455505866557,
+      "capture_encode_ms": 4.200000286102295,
+      "queue_ms": 31.210234970785677,
+      "display_buffer_ms": 22.899999618530273
+    },
+    {
+      "frame_id": 25,
+      "client_at_ms": 23865.099999904633,
+      "total_ms": 736,
+      "inference_ms": 136.01082901004702,
+      "service_ms": 144.09277599770576,
+      "capture_encode_ms": 4.400000095367432,
+      "queue_ms": 35.16235004644841,
+      "display_buffer_ms": 1.4000000953674316
+    },
+    {
+      "frame_id": 28,
+      "client_at_ms": 24246.300000190735,
+      "total_ms": 562,
+      "inference_ms": 122.17917304951698,
+      "service_ms": 130.53661701269448,
+      "capture_encode_ms": 5.400000095367432,
+      "queue_ms": 50.138593069277704,
+      "display_buffer_ms": 4.300000190734863
+    },
+    {
+      "frame_id": 29,
+      "client_at_ms": 24377.5,
+      "total_ms": 513.5,
+      "inference_ms": 122.32522398699075,
+      "service_ms": 130.90312003623694,
+      "capture_encode_ms": 4.700000286102295,
+      "queue_ms": 15.782590955495834,
+      "display_buffer_ms": 15.199999809265137
+    },
+    {
+      "frame_id": 30,
+      "client_at_ms": 24562.700000286102,
+      "total_ms": 583.2000002861023,
+      "inference_ms": 121.73957005143166,
+      "service_ms": 129.88499295897782,
+      "capture_encode_ms": 4.5,
+      "queue_ms": 35.66106199286878,
+      "display_buffer_ms": 15.100000381469727
+    },
+    {
+      "frame_id": 31,
+      "client_at_ms": 24596.200000286102,
+      "total_ms": 353.59999990463257,
+      "inference_ms": 127.05548305530101,
+      "service_ms": 134.91921091917902,
+      "capture_encode_ms": 5.099999904632568,
+      "queue_ms": 0.34549098927527666,
+      "display_buffer_ms": 10.199999809265137
+    },
+    {
+      "frame_id": 32,
+      "client_at_ms": 24697.599999904633,
+      "total_ms": 343.40000009536743,
+      "inference_ms": 123.18316800519824,
+      "service_ms": 131.24029897153378,
+      "capture_encode_ms": 6.300000190734863,
+      "queue_ms": 23.33888504654169,
+      "display_buffer_ms": 26.799999713897705
+    },
+    {
+      "frame_id": 33,
+      "client_at_ms": 24757.800000190735,
+      "total_ms": 290.59999990463257,
+      "inference_ms": 116.60951597150415,
+      "service_ms": 124.62686700746417,
+      "capture_encode_ms": 3.8999996185302734,
+      "queue_ms": 48.918271088041365,
+      "display_buffer_ms": 17.59999990463257
+    },
+    {
+      "frame_id": 34,
+      "client_at_ms": 24903.099999904633,
+      "total_ms": 324.5,
+      "inference_ms": 114.35067793354392,
+      "service_ms": 122.77011491823941,
+      "capture_encode_ms": 6.100000381469727,
+      "queue_ms": 57.413772912696004,
+      "display_buffer_ms": 15.199999809265137
+    },
+    {
+      "frame_id": 35,
+      "client_at_ms": 25001.5,
+      "total_ms": 308.5,
+      "inference_ms": 113.45910199452192,
+      "service_ms": 121.43693293910474,
+      "capture_encode_ms": 6.700000286102295,
+      "queue_ms": 57.75138293392956,
+      "display_buffer_ms": 15.900000095367432
+    },
+    {
+      "frame_id": 36,
+      "client_at_ms": 25124,
+      "total_ms": 316.2999997138977,
+      "inference_ms": 116.4686840493232,
+      "service_ms": 124.49435703456402,
+      "capture_encode_ms": 4.699999809265137,
+      "queue_ms": 75.86694497149438,
+      "display_buffer_ms": 15.599999904632568
+    },
+    {
+      "frame_id": 37,
+      "client_at_ms": 25227,
+      "total_ms": 307.59999990463257,
+      "inference_ms": 116.28874205052853,
+      "service_ms": 124.29583806078881,
+      "capture_encode_ms": 4.300000190734863,
+      "queue_ms": 91.39181603677571,
+      "display_buffer_ms": 1.299999713897705
+    },
+    {
+      "frame_id": 38,
+      "client_at_ms": 25425.700000286102,
+      "total_ms": 395.59999990463257,
+      "inference_ms": 116.87898298259825,
+      "service_ms": 124.88439597655088,
+      "capture_encode_ms": 4.599999904632568,
+      "queue_ms": 104.05655100475997,
+      "display_buffer_ms": 14.899999618530273
+    },
+    {
+      "frame_id": 39,
+      "client_at_ms": 25509.900000095367,
+      "total_ms": 366.09999990463257,
+      "inference_ms": 115.07829499896616,
+      "service_ms": 122.85777705255896,
+      "capture_encode_ms": 4.599999904632568,
+      "queue_ms": 112.75611096061766,
+      "display_buffer_ms": 16.59999990463257
+    },
+    {
+      "frame_id": 41,
+      "client_at_ms": 25620,
+      "total_ms": 248.69999980926514,
+      "inference_ms": 104.91207195445895,
+      "service_ms": 113.22745296638459,
+      "capture_encode_ms": 5.199999809265137,
+      "queue_ms": 10.083629051223397,
+      "display_buffer_ms": 16.799999713897705
+    },
+    {
+      "frame_id": 42,
+      "client_at_ms": 25820.900000095367,
+      "total_ms": 336.69999980926514,
+      "inference_ms": 115.17264798749238,
+      "service_ms": 123.0072129983455,
+      "capture_encode_ms": 4.799999713897705,
+      "queue_ms": 0.3805339802056551,
+      "display_buffer_ms": 15.599999904632568
+    }
+  ]
+}

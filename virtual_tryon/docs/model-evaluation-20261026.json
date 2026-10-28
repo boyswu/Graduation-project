@@ -1,0 +1,612 @@
+{
+  "date": "2026-10-26",
+  "candidate": "FLUX.2-klein-4B / FluxRT",
+  "source_commit": "32206e8255b085b9075e05d389781bcbc728d513",
+  "gpu": "RTX 5090 32607 MiB",
+  "measurements_include_network": false,
+  "main_app_changed": false,
+  "input_type": "Same browser-captured public portrait; stream uses synthetic horizontal translations, not a live human",
+  "model_files": {
+    "count": 19,
+    "bytes": 15980141736,
+    "sha256_verified": true
+  },
+  "quality": [
+    {
+      "garment": "01",
+      "steps": 2,
+      "height": 768,
+      "width": 512,
+      "seed": 42,
+      "pipeline_s": 1.4293543440289795,
+      "peak_vram_mb": 16242.4287109375,
+      "file": "klein-garment-01-2step.png",
+      "cached": false,
+      "compiled": false,
+      "interpolated": false
+    },
+    {
+      "garment": "01",
+      "steps": 4,
+      "height": 768,
+      "width": 512,
+      "seed": 42,
+      "pipeline_s": 0.9025701028294861,
+      "peak_vram_mb": 16242.4287109375,
+      "file": "klein-garment-01-4step.png",
+      "cached": false,
+      "compiled": false,
+      "interpolated": false
+    },
+    {
+      "garment": "02",
+      "steps": 2,
+      "height": 768,
+      "width": 512,
+      "seed": 42,
+      "pipeline_s": 0.5493535515852273,
+      "peak_vram_mb": 16242.4287109375,
+      "file": "klein-garment-02-2step.png",
+      "cached": false,
+      "compiled": false,
+      "interpolated": false
+    },
+    {
+      "garment": "02",
+      "steps": 4,
+      "height": 768,
+      "width": 512,
+      "seed": 42,
+      "pipeline_s": 0.9045493770390749,
+      "peak_vram_mb": 16242.4287109375,
+      "file": "klein-garment-02-4step.png",
+      "cached": false,
+      "compiled": false,
+      "interpolated": false
+    }
+  ],
+  "streams": [
+    {
+      "config": {
+        "models_path": "/output/live-vton/candidates/fluxrt/FLUX.2-klein-4B",
+        "default_steps": 2,
+        "default_seed": 42,
+        "default_prompt": "Use image 1 as the person and image 2 as the exact target garment. Dress the person in the grey knitted cardigan with green V-neck trim, green button placket, beige buttons and black and white dog graphic from image 2. Preserve the person face, hairstyle, pose and background.",
+        "resolution": {
+          "height": 512,
+          "width": 512
+        },
+        "compile_models": false,
+        "enable_spatial_cache": true,
+        "enable_int8_quantization": false,
+        "enable_tiny_vae": false,
+        "enable_flow_upscaler": false,
+        "interpolation_exp": 0,
+        "use_reference_image": true,
+        "reference_image_resolution": {
+          "height": 256,
+          "width": 256
+        },
+        "logging": false
+      },
+      "samples": [
+        {
+          "frame": 0,
+          "shift_px": 0,
+          "seconds": 0.7719310210086405,
+          "warmup": true
+        },
+        {
+          "frame": 1,
+          "shift_px": 0,
+          "seconds": 0.24563790019601583,
+          "warmup": true
+        },
+        {
+          "frame": 2,
+          "shift_px": 0,
+          "seconds": 0.12376134097576141,
+          "warmup": true
+        },
+        {
+          "frame": 3,
+          "shift_px": 0,
+          "seconds": 0.12261693505570292,
+          "warmup": true
+        },
+        {
+          "frame": 4,
+          "shift_px": 8,
+          "seconds": 0.24626574665308,
+          "warmup": false
+        },
+        {
+          "frame": 5,
+          "shift_px": 16,
+          "seconds": 0.2455758568830788,
+          "warmup": false
+        },
+        {
+          "frame": 6,
+          "shift_px": 24,
+          "seconds": 0.24602003581821918,
+          "warmup": false
+        },
+        {
+          "frame": 7,
+          "shift_px": 16,
+          "seconds": 0.24726201873272657,
+          "warmup": false
+        },
+        {
+          "frame": 8,
+          "shift_px": 8,
+          "seconds": 0.24747643200680614,
+          "warmup": false
+        },
+        {
+          "frame": 9,
+          "shift_px": 0,
+          "seconds": 0.2470370796509087,
+          "warmup": false
+        },
+        {
+          "frame": 10,
+          "shift_px": -8,
+          "seconds": 0.2474206080660224,
+          "warmup": false
+        },
+        {
+          "frame": 11,
+          "shift_px": -16,
+          "seconds": 0.24747548112645745,
+          "warmup": false
+        },
+        {
+          "frame": 12,
+          "shift_px": -24,
+          "seconds": 0.24593874393031,
+          "warmup": false
+        },
+        {
+          "frame": 13,
+          "shift_px": -16,
+          "seconds": 0.24883879674598575,
+          "warmup": false
+        }
+      ],
+      "frame_time_median_s": 0.24714954919181764,
+      "generated_fps_total": 4.0497129812759205,
+      "peak_vram_mb": 20074.66015625,
+      "interpolated": false,
+      "compiled": false,
+      "input_type": "Translated fixed portrait, not a live person or camera-to-display latency measurement",
+      "first_frame_s": 0.7719310210086405,
+      "moving_frames": 10
+    },
+    {
+      "config": {
+        "models_path": "/output/live-vton/candidates/fluxrt/FLUX.2-klein-4B",
+        "default_steps": 2,
+        "default_seed": 42,
+        "default_prompt": "Use image 1 as the person and image 2 as the exact target garment. Dress the person in the grey knitted cardigan with green V-neck trim, green button placket, beige buttons and black and white dog graphic from image 2. Preserve the person face, hairstyle, pose and background.",
+        "resolution": {
+          "height": 512,
+          "width": 512
+        },
+        "compile_models": true,
+        "enable_spatial_cache": true,
+        "enable_int8_quantization": false,
+        "enable_tiny_vae": false,
+        "enable_flow_upscaler": false,
+        "interpolation_exp": 0,
+        "use_reference_image": true,
+        "reference_image_resolution": {
+          "height": 256,
+          "width": 256
+        },
+        "logging": false
+      },
+      "samples": [
+        {
+          "frame": 0,
+          "shift_px": 0,
+          "seconds": 46.273293600883335,
+          "warmup": true
+        },
+        {
+          "frame": 1,
+          "shift_px": 0,
+          "seconds": 0.33695361111313105,
+          "warmup": true
+        },
+        {
+          "frame": 2,
+          "shift_px": 0,
+          "seconds": 0.1852021301165223,
+          "warmup": true
+        },
+        {
+          "frame": 3,
+          "shift_px": 0,
+          "seconds": 0.19000776717439294,
+          "warmup": true
+        },
+        {
+          "frame": 4,
+          "shift_px": 8,
+          "seconds": 0.8212303770706058,
+          "warmup": false
+        },
+        {
+          "frame": 5,
+          "shift_px": 16,
+          "seconds": 0.24535073712468147,
+          "warmup": false
+        },
+        {
+          "frame": 6,
+          "shift_px": 24,
+          "seconds": 0.24619757290929556,
+          "warmup": false
+        },
+        {
+          "frame": 7,
+          "shift_px": 16,
+          "seconds": 0.2452938612550497,
+          "warmup": false
+        },
+        {
+          "frame": 8,
+          "shift_px": 8,
+          "seconds": 0.2468987600877881,
+          "warmup": false
+        },
+        {
+          "frame": 9,
+          "shift_px": 0,
+          "seconds": 0.2476255469955504,
+          "warmup": false
+        },
+        {
+          "frame": 10,
+          "shift_px": -8,
+          "seconds": 0.24577153101563454,
+          "warmup": false
+        },
+        {
+          "frame": 11,
+          "shift_px": -16,
+          "seconds": 0.24866196000948548,
+          "warmup": false
+        },
+        {
+          "frame": 12,
+          "shift_px": -24,
+          "seconds": 0.24833077006042004,
+          "warmup": false
+        },
+        {
+          "frame": 13,
+          "shift_px": -16,
+          "seconds": 0.2470098682679236,
+          "warmup": false
+        }
+      ],
+      "frame_time_median_s": 0.24695431417785585,
+      "generated_fps_total": 3.286910126993964,
+      "peak_vram_mb": 20104.38330078125,
+      "interpolated": false,
+      "compiled": true,
+      "input_type": "Translated fixed portrait, not a live person or camera-to-display latency measurement",
+      "first_frame_s": 46.273293600883335,
+      "moving_frames": 10
+    },
+    {
+      "config": {
+        "models_path": "/output/live-vton/candidates/fluxrt/FLUX.2-klein-4B",
+        "default_steps": 2,
+        "default_seed": 42,
+        "default_prompt": "Use image 1 as the person and image 2 as the exact target garment. Dress the person in the grey knitted cardigan with green V-neck trim, green button placket, beige buttons and black and white dog graphic from image 2. Preserve the person face, hairstyle, pose and background.",
+        "resolution": {
+          "height": 320,
+          "width": 576
+        },
+        "compile_models": true,
+        "enable_spatial_cache": true,
+        "enable_int8_quantization": false,
+        "enable_tiny_vae": false,
+        "enable_flow_upscaler": false,
+        "interpolation_exp": 0,
+        "use_reference_image": true,
+        "reference_image_resolution": {
+          "height": 256,
+          "width": 256
+        },
+        "logging": false
+      },
+      "samples": [
+        {
+          "frame": 0,
+          "shift_px": 0,
+          "seconds": 36.75511355465278,
+          "warmup": true
+        },
+        {
+          "frame": 1,
+          "shift_px": 0,
+          "seconds": 0.2499480778351426,
+          "warmup": true
+        },
+        {
+          "frame": 2,
+          "shift_px": 0,
+          "seconds": 0.1098363590426743,
+          "warmup": true
+        },
+        {
+          "frame": 3,
+          "shift_px": 0,
+          "seconds": 0.1079662092961371,
+          "warmup": true
+        },
+        {
+          "frame": 4,
+          "shift_px": 8,
+          "seconds": 0.7717979289591312,
+          "warmup": false
+        },
+        {
+          "frame": 5,
+          "shift_px": 16,
+          "seconds": 0.1754027339629829,
+          "warmup": false
+        },
+        {
+          "frame": 6,
+          "shift_px": 24,
+          "seconds": 0.17454076372087002,
+          "warmup": false
+        },
+        {
+          "frame": 7,
+          "shift_px": 16,
+          "seconds": 0.23357426887378097,
+          "warmup": false
+        },
+        {
+          "frame": 8,
+          "shift_px": 8,
+          "seconds": 0.233170370105654,
+          "warmup": false
+        },
+        {
+          "frame": 9,
+          "shift_px": 0,
+          "seconds": 0.23018930479884148,
+          "warmup": false
+        },
+        {
+          "frame": 10,
+          "shift_px": -8,
+          "seconds": 0.23819366516545415,
+          "warmup": false
+        },
+        {
+          "frame": 11,
+          "shift_px": -16,
+          "seconds": 0.2296321950852871,
+          "warmup": false
+        },
+        {
+          "frame": 12,
+          "shift_px": -24,
+          "seconds": 0.2323962226510048,
+          "warmup": false
+        },
+        {
+          "frame": 13,
+          "shift_px": -16,
+          "seconds": 0.23847964638844132,
+          "warmup": false
+        },
+        {
+          "frame": 14,
+          "shift_px": 8,
+          "seconds": 0.1872460818849504,
+          "warmup": false
+        },
+        {
+          "frame": 15,
+          "shift_px": 16,
+          "seconds": 0.1745703392662108,
+          "warmup": false
+        },
+        {
+          "frame": 16,
+          "shift_px": 24,
+          "seconds": 0.17288686987012625,
+          "warmup": false
+        },
+        {
+          "frame": 17,
+          "shift_px": 16,
+          "seconds": 0.1744349943473935,
+          "warmup": false
+        },
+        {
+          "frame": 18,
+          "shift_px": 8,
+          "seconds": 0.21479977015405893,
+          "warmup": false
+        },
+        {
+          "frame": 19,
+          "shift_px": 0,
+          "seconds": 0.2275682631880045,
+          "warmup": false
+        },
+        {
+          "frame": 20,
+          "shift_px": -8,
+          "seconds": 0.18340756371617317,
+          "warmup": false
+        },
+        {
+          "frame": 21,
+          "shift_px": -16,
+          "seconds": 0.17150002997368574,
+          "warmup": false
+        },
+        {
+          "frame": 22,
+          "shift_px": -24,
+          "seconds": 0.18044429598376155,
+          "warmup": false
+        },
+        {
+          "frame": 23,
+          "shift_px": -16,
+          "seconds": 0.1774257142096758,
+          "warmup": false
+        },
+        {
+          "frame": 24,
+          "shift_px": 8,
+          "seconds": 0.23080400191247463,
+          "warmup": false
+        },
+        {
+          "frame": 25,
+          "shift_px": 16,
+          "seconds": 0.17460509203374386,
+          "warmup": false
+        },
+        {
+          "frame": 26,
+          "shift_px": 24,
+          "seconds": 0.1729298448190093,
+          "warmup": false
+        },
+        {
+          "frame": 27,
+          "shift_px": 16,
+          "seconds": 0.1755565069615841,
+          "warmup": false
+        },
+        {
+          "frame": 28,
+          "shift_px": 8,
+          "seconds": 0.17923633521422744,
+          "warmup": false
+        },
+        {
+          "frame": 29,
+          "shift_px": 0,
+          "seconds": 0.22776143439114094,
+          "warmup": false
+        },
+        {
+          "frame": 30,
+          "shift_px": -8,
+          "seconds": 0.17587366420775652,
+          "warmup": false
+        },
+        {
+          "frame": 31,
+          "shift_px": -16,
+          "seconds": 0.1722545768134296,
+          "warmup": false
+        },
+        {
+          "frame": 32,
+          "shift_px": -24,
+          "seconds": 0.1803221320733428,
+          "warmup": false
+        },
+        {
+          "frame": 33,
+          "shift_px": -16,
+          "seconds": 0.18052183324471116,
+          "warmup": false
+        },
+        {
+          "frame": 34,
+          "shift_px": 8,
+          "seconds": 0.1746899001300335,
+          "warmup": false
+        },
+        {
+          "frame": 35,
+          "shift_px": 16,
+          "seconds": 0.17708756495267153,
+          "warmup": false
+        },
+        {
+          "frame": 36,
+          "shift_px": 24,
+          "seconds": 0.17424257472157478,
+          "warmup": false
+        },
+        {
+          "frame": 37,
+          "shift_px": 16,
+          "seconds": 0.17172995628789067,
+          "warmup": false
+        },
+        {
+          "frame": 38,
+          "shift_px": 8,
+          "seconds": 0.17455799086019397,
+          "warmup": false
+        },
+        {
+          "frame": 39,
+          "shift_px": 0,
+          "seconds": 0.1756195812486112,
+          "warmup": false
+        },
+        {
+          "frame": 40,
+          "shift_px": -8,
+          "seconds": 0.198700743727386,
+          "warmup": false
+        },
+        {
+          "frame": 41,
+          "shift_px": -16,
+          "seconds": 0.17378456378355622,
+          "warmup": false
+        },
+        {
+          "frame": 42,
+          "shift_px": -24,
+          "seconds": 0.17604604410007596,
+          "warmup": false
+        },
+        {
+          "frame": 43,
+          "shift_px": -16,
+          "seconds": 0.17878547497093678,
+          "warmup": false
+        }
+      ],
+      "frame_time_median_s": 0.17810559459030628,
+      "generated_fps_total": 4.838648703367311,
+      "peak_vram_mb": 19532.66552734375,
+      "interpolated": false,
+      "compiled": true,
+      "input_type": "Translated fixed portrait, not a live person or camera-to-display latency measurement",
+      "first_frame_s": 36.75511355465278,
+      "moving_frames": 40,
+      "last_30_generated_fps": 5.445245234039443
+    }
+  ],
+  "limits": [
+    "No real-human articulation, occlusion, temporal stability or motion-to-photon test",
+    "No WebRTC integration or encoded-video network measurement",
+    "Static quality observation covers only two garments",
+    "No claim of Kivicube parity",
+    "Cold start and first moving-frame stalls are separately recorded; cause not profiled"
+  ]
+}

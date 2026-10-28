@@ -1,0 +1,270 @@
+{
+  "date": "2026-10-26",
+  "input": "Synthetic translated public fixed portrait from previous capture; 512x650 crop removes previous gray padding; not actual human gestures",
+  "transport": "Real browser WebSocket -> SSH 8022 -> remote 8030 -> 5090 FluxRT -> full output canvas",
+  "noMockModel": true,
+  "noInterpolation": true,
+  "noLandmarkCrop": true,
+  "noGarmentExtraction": true,
+  "outputs": [
+    {
+      "garment": "neural-look-01",
+      "frames": [
+        {
+          "type": "frame",
+          "id": 1,
+          "inference_ms": 831.7501479759812,
+          "service_ms": 838.5801166296005,
+          "frames": 1,
+          "sampleToDrawMs": 988,
+          "generatedFps": 0,
+          "responseBytes": 44878,
+          "garment": "neural-look-01"
+        },
+        {
+          "type": "frame",
+          "id": 2,
+          "inference_ms": 435.7586558908224,
+          "service_ms": 440.7319650053978,
+          "frames": 2,
+          "sampleToDrawMs": 572,
+          "generatedFps": 1.7373175819417712,
+          "responseBytes": 43917,
+          "garment": "neural-look-01"
+        },
+        {
+          "type": "frame",
+          "id": 3,
+          "inference_ms": 251.35182589292526,
+          "service_ms": 255.97310299053788,
+          "frames": 3,
+          "sampleToDrawMs": 356.40000009536743,
+          "generatedFps": 2.143163309482186,
+          "responseBytes": 44336,
+          "garment": "neural-look-01"
+        },
+        {
+          "type": "frame",
+          "id": 4,
+          "inference_ms": 244.1074512898922,
+          "service_ms": 249.0463280119002,
+          "frames": 4,
+          "sampleToDrawMs": 350.40000009536743,
+          "generatedFps": 2.3353573098417537,
+          "responseBytes": 44548,
+          "garment": "neural-look-01"
+        },
+        {
+          "type": "frame",
+          "id": 5,
+          "inference_ms": 246.2576343677938,
+          "service_ms": 251.33606093004346,
+          "frames": 5,
+          "sampleToDrawMs": 344.59999990463257,
+          "generatedFps": 2.4538371880461423,
+          "responseBytes": 44327,
+          "garment": "neural-look-01"
+        },
+        {
+          "type": "frame",
+          "id": 6,
+          "inference_ms": 244.01809694245458,
+          "service_ms": 249.0631639957428,
+          "frames": 6,
+          "sampleToDrawMs": 356.6000003814697,
+          "generatedFps": 2.5157232704402515,
+          "responseBytes": 44099,
+          "garment": "neural-look-01"
+        }
+      ]
+    },
+    {
+      "garment": "neural-look-02",
+      "frames": [
+        {
+          "type": "frame",
+          "id": 1,
+          "inference_ms": 347.3514001816511,
+          "service_ms": 352.33936086297035,
+          "frames": 1,
+          "sampleToDrawMs": 447,
+          "generatedFps": 0,
+          "responseBytes": 38630,
+          "garment": "neural-look-02"
+        },
+        {
+          "type": "frame",
+          "id": 2,
+          "inference_ms": 246.09994562342763,
+          "service_ms": 251.1772606521845,
+          "frames": 2,
+          "sampleToDrawMs": 349.8999996185303,
+          "generatedFps": 2.849002849002849,
+          "responseBytes": 39046,
+          "garment": "neural-look-02"
+        },
+        {
+          "type": "frame",
+          "id": 3,
+          "inference_ms": 247.39001132547855,
+          "service_ms": 252.27487739175558,
+          "frames": 3,
+          "sampleToDrawMs": 344.90000009536743,
+          "generatedFps": 2.8706760430295577,
+          "responseBytes": 38598,
+          "garment": "neural-look-02"
+        },
+        {
+          "type": "frame",
+          "id": 4,
+          "inference_ms": 244.7062050923705,
+          "service_ms": 250.22348389029503,
+          "frames": 4,
+          "sampleToDrawMs": 350.30000019073486,
+          "generatedFps": 2.86314182043701,
+          "responseBytes": 38809,
+          "garment": "neural-look-02"
+        },
+        {
+          "type": "frame",
+          "id": 5,
+          "inference_ms": 247.34690599143505,
+          "service_ms": 252.92163202539086,
+          "frames": 5,
+          "sampleToDrawMs": 351.59999990463257,
+          "generatedFps": 2.8567347515945447,
+          "responseBytes": 39041,
+          "garment": "neural-look-02"
+        },
+        {
+          "type": "frame",
+          "id": 6,
+          "inference_ms": 241.81265104562044,
+          "service_ms": 246.9029761850834,
+          "frames": 6,
+          "sampleToDrawMs": 343.7000002861023,
+          "generatedFps": 2.8658222039204917,
+          "responseBytes": 38980,
+          "garment": "neural-look-02"
+        }
+      ]
+    },
+    {
+      "garment": "neural-look-03",
+      "frames": [
+        {
+          "type": "frame",
+          "id": 1,
+          "inference_ms": 406.02958807721734,
+          "service_ms": 410.6006808578968,
+          "frames": 1,
+          "sampleToDrawMs": 506.7999997138977,
+          "generatedFps": 0,
+          "responseBytes": 40082,
+          "garment": "neural-look-03"
+        },
+        {
+          "type": "frame",
+          "id": 2,
+          "inference_ms": 306.76153488457203,
+          "service_ms": 311.35743483901024,
+          "frames": 2,
+          "sampleToDrawMs": 410.8999996185303,
+          "generatedFps": 2.4271844660194173,
+          "responseBytes": 40612,
+          "garment": "neural-look-03"
+        },
+        {
+          "type": "frame",
+          "id": 3,
+          "inference_ms": 302.25545121356845,
+          "service_ms": 307.17223417013884,
+          "frames": 3,
+          "sampleToDrawMs": 405.19999980926514,
+          "generatedFps": 2.444987775061125,
+          "responseBytes": 40281,
+          "garment": "neural-look-03"
+        },
+        {
+          "type": "frame",
+          "id": 4,
+          "inference_ms": 310.61314325779676,
+          "service_ms": 316.26560585573316,
+          "frames": 4,
+          "sampleToDrawMs": 423.5,
+          "generatedFps": 2.414875633534089,
+          "responseBytes": 40761,
+          "garment": "neural-look-03"
+        },
+        {
+          "type": "frame",
+          "id": 5,
+          "inference_ms": 307.39786475896835,
+          "service_ms": 312.31165397912264,
+          "frames": 5,
+          "sampleToDrawMs": 417.2999997138977,
+          "generatedFps": 2.4090580581608374,
+          "responseBytes": 40405,
+          "garment": "neural-look-03"
+        },
+        {
+          "type": "frame",
+          "id": 6,
+          "inference_ms": 122.62900825589895,
+          "service_ms": 127.51041911542416,
+          "frames": 6,
+          "sampleToDrawMs": 223.5,
+          "generatedFps": 2.6528013579658416,
+          "responseBytes": 40405,
+          "garment": "neural-look-03"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "mobileWidths": {
+    "client": 390,
+    "scroll": 390
+  },
+  "clearedAfterStop": true,
+  "automated_checks": {
+    "playwright_passed": 15,
+    "build_passed": true
+  },
+  "deployment": {
+    "web": "http://127.0.0.1:8766",
+    "ssh_forward": "127.0.0.1:8022 -> remote loopback:8030",
+    "runtime": "/output/live-vton/candidates/fluxrt",
+    "default_pipeline": "full-frame",
+    "legacy_comparison_retained": true
+  },
+  "limitations": [
+    "No actual human gesture, self-occlusion, turn, cloth dynamics or identity-stability acceptance",
+    "Sample-to-draw excludes camera exposure and monitor scanout",
+    "Only six displayed frames per garment, not a long-running reliability measurement",
+    "SSH resets occurred during setup; automatic tunnel recovery works but this is not a stable-network guarantee"
+  ],
+  "summary": [
+    {
+      "garment": "neural-look-01",
+      "displayed_frames": 6,
+      "median_inference_ms_after_first": 246.2576343677938,
+      "median_sample_to_draw_ms_after_first": 356.40000009536743,
+      "last_measured_generated_fps": 2.5157232704402515
+    },
+    {
+      "garment": "neural-look-02",
+      "displayed_frames": 6,
+      "median_inference_ms_after_first": 246.09994562342763,
+      "median_sample_to_draw_ms_after_first": 349.8999996185303,
+      "last_measured_generated_fps": 2.8658222039204917
+    },
+    {
+      "garment": "neural-look-03",
+      "displayed_frames": 6,
+      "median_inference_ms_after_first": 306.76153488457203,
+      "median_sample_to_draw_ms_after_first": 410.8999996185303,
+      "last_measured_generated_fps": 2.6528013579658416
+    }
+  ]
+}

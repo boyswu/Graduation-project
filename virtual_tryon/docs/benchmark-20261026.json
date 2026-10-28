@@ -1,0 +1,346 @@
+{
+  "utc": "20261026T040236Z",
+  "settings": {
+    "width": 512,
+    "height": 768,
+    "steps": 8,
+    "guidance_scale": 2.5,
+    "seed": 42,
+    "response_format": "compact"
+  },
+  "input_sha256": {
+    "person": "9373d531e44e4cf05cba87e6a80e74bbb0aba992e1432486bb1485be13d26b63",
+    "garment": "fd74b6db0fea913db3a18e4a154d4035c0149c9250f7e1335dbd6077c0318064",
+    "mask": "260a7011bfac5a5bc34ed89bfb924d9c6fd731a7f945b410e750787a05a89bc4"
+  },
+  "request_bytes": 518629,
+  "endpoints": [
+    {
+      "url": "http://127.0.0.1:8021",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "torch": "2.11.0+cu130",
+      "rtt_ms": [
+        208.29910039901733,
+        246.31240032613277,
+        218.04110007360578,
+        219.5190996862948,
+        248.20030014961958,
+        213.18979980424047,
+        209.57890013232827,
+        269.8621000163257,
+        211.30349999293685,
+        216.54300019145012,
+        247.85889964550734,
+        200.8405001834035,
+        207.7985000796616,
+        247.48650006949902,
+        218.71539996936917,
+        215.09950002655387,
+        262.9018002189696,
+        224.6616999618709,
+        205.33520029857755,
+        250.0217999331653,
+        215.501899830997,
+        216.50399966165423,
+        244.28199976682663,
+        260.2019002661109
+      ],
+      "rtt_median_ms": 218.37825002148747,
+      "rtt_p95_ms": 262.9018002189696,
+      "rtt_stddev_ms": 20.425751846523006,
+      "runs": [
+        {
+          "warmup": true,
+          "http_ms": 1115.1660000905395,
+          "response_bytes": 212676,
+          "timings_ms": {
+            "preprocess": 72.38519424572587,
+            "encode": 47.323714941740036,
+            "denoise": 413.32414792850614,
+            "decode": 47.57069796323776,
+            "layer": 6.15201611071825,
+            "total": 587.1007312089205,
+            "per_step": 51.66551849106327,
+            "garment_cache_hit": true
+          },
+          "service_ms": 620.5817540176213,
+          "response_encode_ms": 31.524834223091602
+        },
+        {
+          "warmup": false,
+          "http_ms": 960.9603001736104,
+          "response_bytes": 212673,
+          "timings_ms": {
+            "preprocess": 61.42038106918335,
+            "encode": 40.31797219067812,
+            "denoise": 414.0383950434625,
+            "decode": 47.55540471524,
+            "layer": 6.1357710510492325,
+            "total": 569.832834880799,
+            "per_step": 51.754799380432814,
+            "garment_cache_hit": true
+          },
+          "service_ms": 602.3108148947358,
+          "response_encode_ms": 31.25050012022257
+        },
+        {
+          "warmup": false,
+          "http_ms": 877.6610000059009,
+          "response_bytes": 212678,
+          "timings_ms": {
+            "preprocess": 60.81992480903864,
+            "encode": 46.620164066553116,
+            "denoise": 414.1280888579786,
+            "decode": 47.447220887988806,
+            "layer": 6.130604073405266,
+            "total": 575.4880807362497,
+            "per_step": 51.76601110724732,
+            "garment_cache_hit": true
+          },
+          "service_ms": 607.9714200459421,
+          "response_encode_ms": 31.250561121851206
+        },
+        {
+          "warmup": false,
+          "http_ms": 992.1699999831617,
+          "response_bytes": 212675,
+          "timings_ms": {
+            "preprocess": 59.70126809552312,
+            "encode": 40.84561811760068,
+            "denoise": 413.6646408587694,
+            "decode": 47.40053089335561,
+            "layer": 6.131344940513372,
+            "total": 568.080963101238,
+            "per_step": 51.70808010734618,
+            "garment_cache_hit": true
+          },
+          "service_ms": 601.1417517438531,
+          "response_encode_ms": 31.438413076102734
+        },
+        {
+          "warmup": false,
+          "http_ms": 929.3912998400629,
+          "response_bytes": 212677,
+          "timings_ms": {
+            "preprocess": 60.50898600369692,
+            "encode": 33.29886915162206,
+            "denoise": 413.95221510902047,
+            "decode": 47.40661010146141,
+            "layer": 6.119526922702789,
+            "total": 561.5972657687962,
+            "per_step": 51.74402688862756,
+            "garment_cache_hit": true
+          },
+          "service_ms": 594.1253928467631,
+          "response_encode_ms": 31.348979100584984
+        },
+        {
+          "warmup": false,
+          "http_ms": 965.0054997764528,
+          "response_bytes": 212676,
+          "timings_ms": {
+            "preprocess": 60.37609605118632,
+            "encode": 24.74646409973502,
+            "denoise": 414.10212125629187,
+            "decode": 47.349323984235525,
+            "layer": 6.106798071414232,
+            "total": 553.0022969469428,
+            "per_step": 51.76276515703648,
+            "garment_cache_hit": true
+          },
+          "service_ms": 585.4888209141791,
+          "response_encode_ms": 31.28597280010581
+        }
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:8020",
+      "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "torch": "2.1.2+cu121",
+      "rtt_ms": [
+        3.471500240266323,
+        26.87350008636713,
+        15.251100063323975,
+        3.7671001628041267,
+        27.87230024114251,
+        2.914000302553177,
+        3.0503999441862106,
+        23.798900190740824,
+        16.670999582856894,
+        2.4067997001111507,
+        42.64659993350506,
+        16.30060002207756,
+        2.973299939185381,
+        3.3392002806067467,
+        24.50890000909567,
+        15.479400288313627,
+        14.226699713617563,
+        2.9206001199781895,
+        28.69440009817481,
+        4.193300381302834,
+        2.4711000733077526,
+        3.15140001475811,
+        2.794200088828802,
+        3.6734999157488346
+      ],
+      "rtt_median_ms": 3.98020027205348,
+      "rtt_p95_ms": 28.69440009817481,
+      "rtt_stddev_ms": 11.313168193734665,
+      "runs": [
+        {
+          "warmup": true,
+          "http_ms": 4958.332000300288,
+          "response_bytes": 208711,
+          "timings_ms": {
+            "preprocess": 36.463800352066755,
+            "encode": 335.88230004534125,
+            "denoise": 4208.759600296617,
+            "decode": 340.57970019057393,
+            "layer": 2.268499694764614,
+            "total": 4924.666200298816,
+            "per_step": 526.0949500370771,
+            "garment_cache_hit": true
+          },
+          "service_ms": 4951.059399638325,
+          "response_encode_ms": 24.742200039327145
+        },
+        {
+          "warmup": false,
+          "http_ms": 4732.67209995538,
+          "response_bytes": 208709,
+          "timings_ms": {
+            "preprocess": 35.131500102579594,
+            "encode": 166.60760017111897,
+            "denoise": 4154.676100239158,
+            "decode": 340.8777001313865,
+            "layer": 2.424399834126234,
+            "total": 4700.174200348556,
+            "per_step": 519.3345125298947,
+            "garment_cache_hit": true
+          },
+          "service_ms": 4726.392399985343,
+          "response_encode_ms": 24.66199966147542
+        },
+        {
+          "warmup": false,
+          "http_ms": 4755.355800036341,
+          "response_bytes": 208707,
+          "timings_ms": {
+            "preprocess": 34.556400030851364,
+            "encode": 172.8729996830225,
+            "denoise": 4142.394000198692,
+            "decode": 353.2108999788761,
+            "layer": 2.446299884468317,
+            "total": 4705.924300011247,
+            "per_step": 517.7992500248365,
+            "garment_cache_hit": true
+          },
+          "service_ms": 4731.966199818999,
+          "response_encode_ms": 24.4931997731328
+        },
+        {
+          "warmup": false,
+          "http_ms": 4739.603199996054,
+          "response_bytes": 208710,
+          "timings_ms": {
+            "preprocess": 34.97660020366311,
+            "encode": 183.3915999159217,
+            "denoise": 4144.4826000370085,
+            "decode": 340.40059987455606,
+            "layer": 2.4566003121435642,
+            "total": 4706.291799899191,
+            "per_step": 518.0603250046261,
+            "garment_cache_hit": true
+          },
+          "service_ms": 4732.670200057328,
+          "response_encode_ms": 24.883300065994263
+        },
+        {
+          "warmup": false,
+          "http_ms": 5116.583399940282,
+          "response_bytes": 208710,
+          "timings_ms": {
+            "preprocess": 34.27320020273328,
+            "encode": 174.10709988325834,
+            "denoise": 4427.469599992037,
+            "decode": 414.7395002655685,
+            "layer": 2.8329999186098576,
+            "total": 5053.871100302786,
+            "per_step": 553.4336999990046,
+            "garment_cache_hit": true
+          },
+          "service_ms": 5090.335699729621,
+          "response_encode_ms": 34.623400308191776
+        },
+        {
+          "warmup": false,
+          "http_ms": 5628.848100081086,
+          "response_bytes": 208709,
+          "timings_ms": {
+            "preprocess": 42.47350012883544,
+            "encode": 191.73459988087416,
+            "denoise": 4912.670100107789,
+            "decode": 434.8153001628816,
+            "layer": 3.0650999397039413,
+            "total": 5585.252000018954,
+            "per_step": 614.0837625134736,
+            "garment_cache_hit": true
+          },
+          "service_ms": 5619.871799834073,
+          "response_encode_ms": 32.51990024000406
+        }
+      ]
+    }
+  ],
+  "paired_response_formats": [
+    {
+      "format": "png",
+      "http_ms": 1626.638500019908,
+      "response_bytes": 1927208,
+      "service_ms": 652.1804193034768
+    },
+    {
+      "format": "compact",
+      "http_ms": 905.5876000784338,
+      "response_bytes": 212675,
+      "service_ms": 598.2722560875118
+    },
+    {
+      "format": "png",
+      "http_ms": 1857.5846999883652,
+      "response_bytes": 1927209,
+      "service_ms": 658.8519681245089
+    },
+    {
+      "format": "compact",
+      "http_ms": 917.6321001723409,
+      "response_bytes": 212679,
+      "service_ms": 604.7477386891842
+    }
+  ],
+  "browser_fixture_runs": [
+    {
+      "run": 0,
+      "httpMs": 951.9000000953674,
+      "extractMs": 2958.300000190735,
+      "totalMs": 3911.5999999046326,
+      "visiblePixels": 65696
+    },
+    {
+      "run": 1,
+      "httpMs": 943,
+      "extractMs": 51,
+      "totalMs": 995.2999997138977,
+      "visiblePixels": 65696
+    },
+    {
+      "run": 2,
+      "httpMs": 861.6000003814697,
+      "extractMs": 57.39999961853027,
+      "totalMs": 920,
+      "visiblePixels": 65696
+    }
+  ],
+  "tunnel_reconnect_seconds": 34.8,
+  "compression_psnr_db": 42.845164101140234
+}

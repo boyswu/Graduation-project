@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-26",
+  "test_input": "CatVTON bundled person photo, cropped at y=660 (hips excluded), 640x480 Y4M camera fixture at 30 FPS; fixed photo, not live human motion",
+  "model": "Existing CatVTON, RTX 5090, 512x768, 8 steps, CFG 2.5; no model change",
+  "camera_samples": [
+    {
+      "cameraFps": 29.70542123937615,
+      "fps": 165.01650165016457,
+      "poseHz": 14.027560029705404,
+      "maskHz": 5.776054129878696,
+      "trackingAgeMs": 15.300000095367068,
+      "trackingMode": "upper-body",
+      "neuralLayerReady": true
+    },
+    {
+      "cameraFps": 29.70542123937615,
+      "fps": 165.04676324958706,
+      "poseHz": 14.027560029705404,
+      "maskHz": 5.776054129878696,
+      "trackingAgeMs": 8.7000001907345,
+      "trackingMode": "upper-body",
+      "neuralLayerReady": true
+    },
+    {
+      "cameraFps": 29.702970297029704,
+      "fps": 165.01650165016457,
+      "poseHz": 18.151815181518153,
+      "maskHz": 5.775577557755776,
+      "trackingAgeMs": 12.100000190734136,
+      "trackingMode": "upper-body",
+      "neuralLayerReady": true
+    },
+    {
+      "cameraFps": 29.70051975909582,
+      "fps": 165.0165016501651,
+      "poseHz": 17.325303192805894,
+      "maskHz": 5.775101064268632,
+      "trackingAgeMs": 9.400000190735227,
+      "trackingMode": "upper-body",
+      "neuralLayerReady": true
+    }
+  ],
+  "inference": {
+    "httpMs": 1411.9000000953674,
+    "totalMs": 2361.699999809265,
+    "aiStatus": "ready",
+    "hips": [
+      {
+        "x": 0.6236025309562683,
+        "y": 1.2296538472175598,
+        "z": 0,
+        "visibility": 0,
+        "estimated": true
+      },
+      {
+        "x": 0.3758184099197388,
+        "y": 1.2125662446022034,
+        "z": 0,
+        "visibility": 0,
+        "estimated": true
+      }
+    ],
+    "frameRate": 30
+  },
+  "browser_errors": [],
+  "checks": [
+    "11 Playwright tests passed",
+    "Production build and worker GPU initialization passed",
+    "Hidden hips and elbows accepted; hips marked estimated with zero observed visibility",
+    "Half-body rig translated garment by 64 px with a 64 px shoulder shift",
+    "Generated garment matte remains opaque where output color matches source; original clothing no longer reappears through per-pixel difference holes"
+  ],
+  "limits": [
+    "Photo-driven fake camera validates partial-body detection and rendering, not real human motion-to-photon latency",
+    "Garment and hair edges still contain residual source clothing; Kivicube quality parity has not been achieved or claimed",
+    "TrackingAgeMs only measures snapshot scheduling and worker round trip, excluding camera capture, pose filtering and screen presentation"
+  ]
+}

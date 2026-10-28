@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1400">
+  <defs>
+    <linearGradient id="silk" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#9a263c"/>
+      <stop offset=".33" stop-color="#d24d5d"/>
+      <stop offset=".62" stop-color="#8d1e34"/>
+      <stop offset="1" stop-color="#5e1225"/>
+    </linearGradient>
+    <linearGradient id="light" x1="0" x2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".02"/>
+      <stop offset=".24" stop-color="#fff" stop-opacity=".24"/>
+      <stop offset=".55" stop-color="#fff" stop-opacity=".03"/>
+      <stop offset="1" stop-color="#24050e" stop-opacity=".35"/>
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="14"/></filter>
+    <clipPath id="dress">
+      <path d="M397 104 449 74c39 54 87 54 126 0l52 30 148 242-78 156-34-78 84 898q-234 78-468 0l84-898-34 78-78-156Z"/>
+    </clipPath>
+  </defs>
+  <ellipse cx="512" cy="1342" rx="348" ry="42" fill="#13070a" opacity=".25" filter="url(#soft)"/>
+  <path d="M397 104 449 74c39 54 87 54 126 0l52 30 148 242-78 156-34-78 84 898q-234 78-468 0l84-898-34 78-78-156Z" fill="url(#silk)"/>
+  <g clip-path="url(#dress)">
+    <rect width="1024" height="1400" fill="url(#light)"/>
+    <path d="M329 500c147 77 290 69 419-9M296 781c164 60 321 51 480-11M333 1072c118 45 246 42 365 2" fill="none" stroke="#ffd6dc" stroke-opacity=".17" stroke-width="14"/>
+    <path d="M423 196c-48 191-41 787-37 1079M603 190c46 207 39 753 35 1094" fill="none" stroke="#3d0716" stroke-opacity=".2" stroke-width="24"/>
+    <path d="M282 1114c120-39 340-40 460 1" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="4"/>
+  </g>
+  <path d="M397 104 449 74c39 54 87 54 126 0l52 30 148 242-78 156-34-78 84 898q-234 78-468 0l84-898-34 78-78-156Z" fill="none" stroke="#e67c87" stroke-opacity=".5" stroke-width="4"/>
+  <path d="M450 81c34 43 87 43 123 0" fill="none" stroke="#f3abb4" stroke-opacity=".55" stroke-width="7"/>
+  <path d="M494 102c5 75 11 92 19 92 10 0 17-19 20-92" fill="none" stroke="#f6c8ce" stroke-opacity=".45" stroke-width="3"/>
+</svg>
