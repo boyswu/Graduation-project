@@ -29,7 +29,7 @@ test("offline demo permits camera and garment upload without inference traffic",
   await expect(page.locator("#helpDialog")).toBeVisible();
   await page.getByRole("button", { name: "关闭使用帮助" }).click();
   await page.locator("#garmentUpload").setInputFiles("public/garments/products/look-07.jpg");
-  await expect(page.locator("#garmentUploadStatus")).toContainText("自定义衣服已选择");
+  await expect(page.locator("#garmentUploadStatus")).toContainText("已保存到本机衣柜");
   expect(remote).toEqual([]);
   expect(await page.evaluate(() => window.__VTON_DEBUG__.fullFrame.running)).toBe(false);
   await expect(page.locator("#saveGeneratedFrame")).toBeDisabled();
@@ -148,7 +148,7 @@ test("dragged garments can be selected and removed without keeping their object 
     transfer.items.add(new File([blob], "shirt.jpg", { type: "image/jpeg" }));
     document.querySelector("#garmentDropZone").dispatchEvent(new DragEvent("drop", { bubbles: true, cancelable: true, dataTransfer: transfer }));
   });
-  await expect(page.locator("#garmentUploadStatus")).toContainText("自定义衣服已选择");
+  await expect(page.locator("#garmentUploadStatus")).toContainText("已保存到本机衣柜");
   await expect(page.locator(".garment-card")).toHaveCount(9);
   await expect(page.locator('[data-filter="all"]')).toHaveAttribute("aria-pressed", "true");
   const oldUrl = await page.locator("#selectedReferenceImage").getAttribute("src");
@@ -156,6 +156,7 @@ test("dragged garments can be selected and removed without keeping their object 
   await page.locator("#garmentUpload").setInputFiles({ name: "bad.txt", mimeType: "text/plain", buffer: Buffer.from("invalid") });
   await expect(page.locator("#garmentUploadStatus")).toContainText("请选择不超过");
   await expect(page.locator("#selectedReferenceImage")).toHaveAttribute("src", oldUrl);
+  page.once("dialog", dialog => dialog.accept());
   await page.locator("#removeUploadedGarment").click();
   await expect(page.locator("#selectedReferenceName")).toHaveText("神经样衣 03");
   await expect(page.locator(".garment-card")).toHaveCount(8);

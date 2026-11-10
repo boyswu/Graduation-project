@@ -134,7 +134,7 @@ def build_doc(source):
     section.left_margin = Cm(2.8); section.right_margin = Cm(2.4)
     section.header_distance = section.footer_distance = Cm(1.15)
     section.different_first_page_header_footer = True
-    for name, size in [("Normal", 11), ("Title", 22), ("Heading 1", 16), ("Heading 2", 13), ("Caption", 10), ("TOC 1", 11)]:
+    for name, size in [("Normal", 11), ("Title", 22), ("Heading 1", 16), ("Heading 2", 13), ("Caption", 10), ("TOC 1", 11), ("TOC 2", 10)]:
         if name not in document.styles:
             from docx.enum.style import WD_STYLE_TYPE
             document.styles.add_style(name, WD_STYLE_TYPE.PARAGRAPH)
@@ -186,7 +186,8 @@ def build_doc(source):
     toc.paragraph_format.first_line_indent = Cm(0)
     toc_body = document.add_paragraph()
     toc_body.paragraph_format.first_line_indent = Cm(0)
-    add_field(toc_body, ' TOC \\o "1-1" \\h \\z ')
+    toc_depth = '1-2' if source.stem == '毕业论文初稿' else '1-1'
+    add_field(toc_body, f' TOC \\o "{toc_depth}" \\h \\z ')
     update = OxmlElement("w:updateFields"); update.set(qn("w:val"), "true")
     document.settings.element.append(update)
     document.add_page_break()

@@ -508,7 +508,7 @@ test("wardrobe accepts uploaded reference garments and heartbeat stays outside f
   await expect(page.locator(".garment-card")).toHaveCount(8);
   await page.locator("#garmentUpload").setInputFiles("public/garments/products/look-05.jpg");
   await expect(page.locator(".garment-card")).toHaveCount(9);
-  await expect(page.locator("#activeGarmentName")).toHaveText("Custom Garment");
+  await expect(page.locator("#activeGarmentName")).toHaveText("look-05");
   await expect(page.locator("#wardrobeCount")).toHaveText("09");
   await page.locator("#fullFrameButton").click();
   await expect.poll(() => initializations.length).toBe(1);
@@ -520,12 +520,13 @@ test("wardrobe accepts uploaded reference garments and heartbeat stays outside f
   await page.locator("#garmentUpload").setInputFiles("public/garments/products/look-08.jpg");
   await expect.poll(() => initializations.length).toBe(2);
   expect(initializations[1].garment_id).not.toBe(originalId);
-  await expect(page.locator(".garment-card")).toHaveCount(9);
+  await expect(page.locator(".garment-card")).toHaveCount(10);
   await page.locator("#fullFrameButton").click();
   await page.locator("#topCameraButton").click();
   await page.reload();
-  await expect(page.locator(".garment-card")).toHaveCount(8);
-  await expect(page.locator("#activeGarmentName")).toHaveText("Neural Look 03");
+  await expect(page.locator(".garment-card")).toHaveCount(10);
+  await expect(page.locator("#activeGarmentName")).toHaveText("look-08");
+  expect(await page.evaluate(() => window.__VTON_DEBUG__.fullFrame.running)).toBe(false);
 });
 
 test("runtime journal locates delayed image delivery, exports numeric-only traces and survives reload", async ({ page }) => {

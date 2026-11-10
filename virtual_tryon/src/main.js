@@ -28,6 +28,7 @@ import { GARMENTS } from "./garments.js";
 import { TryOnEngine } from "./tryon-engine.js";
 import { CatVTONClient } from "./catvton-client.js";
 import { FullFrameClient } from "./full-frame-client.js";
+import { WardrobeStore, readPreferences, readSetting, writeSetting, WARDROBE_LIMIT } from "./wardrobe-store.js";
 
 const ICONS = {
   Activity,
@@ -68,6 +69,7 @@ document.querySelector("#app").innerHTML = `
       </div>
       <div class="topbar-actions">
         <a class="studio-home-link" href="/">首页</a>
+        <button class="button button-quiet" id="openPreferences" type="button" aria-label="偏好设置"><i data-lucide="sliders-horizontal"></i><span>偏好设置</span></button>
         <button class="button button-quiet" id="openDiagnostics" type="button">
           <i data-lucide="activity"></i><span>链路诊断</span>
         </button>
@@ -79,6 +81,7 @@ document.querySelector("#app").innerHTML = `
 
     <div class="studio-notice" id="serviceNotice" role="status" aria-live="polite"><div><strong id="serviceNoticeTitle">正在检查 AI 服务</strong><span id="serviceNoticeDetail">摄像头画面仅在你主动开始生成后发送至远程 GPU。</span></div><button id="retryService" class="button button-quiet" type="button">重新检查服务</button></div>
     <div class="studio-steps" aria-label="操作流程"><span id="garmentStep"><b>01</b> 选择衣服</span><span id="cameraStep"><b>02</b> 打开摄像头</span><span id="generationStep"><b>03</b> 开始试穿</span><a href="/graduation/毕设配套材料.docx" download>操作手册 ↗</a></div>
+    <div class="studio-next-step" aria-live="polite"><div><strong id="nextStepTitle">选择衣服，打开摄像头</strong><span id="nextStepDetail">衣服已选好，下一步开启本地预览。</span></div><button class="button button-quiet" id="nextStepAction" type="button">开启本地预览</button></div>
     <main class="workspace">
       <section class="stage-column" aria-label="实时试衣预览">
         <div class="stage-heading">
@@ -157,6 +160,7 @@ document.querySelector("#app").innerHTML = `
         <div class="full-frame-controls" id="fullFrameControls">
           <div class="generation-heading"><span class="eyebrow">MAKE IT YOURS</span><h2>试穿设置</h2><span class="generation-badge" id="generationBadge">待开始</span></div>
           <div class="selected-reference"><img id="selectedReferenceImage" alt="当前选择的服装参考" /><div><small>当前参考衣服</small><strong id="selectedReferenceName"></strong><span id="selectedReferenceMeta">内置样衣 · 可随时更换</span></div><button id="removeUploadedGarment" class="icon-button" type="button" aria-label="移除上传衣服" title="移除上传衣服" hidden><i data-lucide="x"></i></button></div>
+          <div class="reference-actions"><button class="button button-quiet" id="favoriteGarment" type="button" aria-pressed="false">☆ 收藏衣服</button><button class="button button-quiet" id="renameGarment" type="button" hidden>重命名</button><button class="button button-quiet" id="saveGarment" type="button" hidden>保存到本机</button></div>
           <div class="generation-options">
             <label class="pipeline-choice">显示偏好
               <select id="fullFrameDisplay" aria-label="预览方式">
@@ -256,11 +260,14 @@ document.querySelector("#app").innerHTML = `
           <div class="filter-row" role="group" aria-label="服装分类">
             <button class="filter-chip is-active" data-filter="all" type="button" aria-pressed="true">全部样衣</button>
             <button class="filter-chip" data-filter="uploaded" type="button" aria-pressed="false">我的上传</button>
+            <button class="filter-chip" data-filter="favorites" type="button" aria-pressed="false">我的收藏</button>
           </div>
           <div class="garment-list" id="garmentList"></div>
           <p class="wardrobe-empty" id="wardrobeEmpty" hidden>没有找到匹配的衣服，试试其他名称。</p>
           <div class="garment-drop-zone" id="garmentDropZone"><button class="button button-quiet" id="uploadGarmentButton" type="button"><i data-lucide="upload"></i><span>上传衣服样本</span><small>点击选择，或将图片拖到这里</small></button><input id="garmentUpload" type="file" accept="image/jpeg,image/png,image/webp" hidden /></div>
-          <p class="garment-upload-note" id="garmentUploadStatus">支持 JPG / PNG / WebP，最大 8 MB；优先使用完整正面衣物图，上传样衣仅在本次页面保留。</p>
+          <label class="wardrobe-save-option"><input id="saveUploads" type="checkbox" checked /> 上传后保存到本机衣柜</label>
+          <p class="garment-upload-note" id="garmentUploadStatus" role="status">支持 JPG / PNG / WebP，单张最大 8 MB；只保存衣服参考图，不保存相机画面。</p>
+          <p class="wardrobe-storage" id="wardrobeStorage" role="status">正在读取本机衣柜…</p>
         </section>
 
         <section class="panel-section legacy-fit-section">
@@ -383,7 +390,7 @@ document.querySelector("#app").innerHTML = `
     </form>
   </dialog>
 
-  <dialog class="diagnostics-dialog" id="helpDialog" aria-labelledby="helpTitle"><form method="dialog" class="dialog-shell"><div class="dialog-heading"><h2 id="helpTitle">开始一次试穿</h2><button class="icon-button" aria-label="关闭使用帮助" value="close">×</button></div><ol class="help-steps"><li>选择内置样衣或上传不超过 8 MB 的服装图片。</li><li>打开摄像头，允许浏览器访问。保持上半身清晰、光线均匀。</li><li>服务就绪后点击“开始连续生成”。无 GPU 时可使用本地相机和交互演示。</li><li>低延迟档直接显示原始生成帧；平滑档包含补帧，可能增加等待。</li><li>离开前关闭摄像头。保存画面与导出数字日志均由你主动操作。</li></ol><p class="dialog-intro">快速动作、衣服小字和转身背面仍可能出现错误；生成帧率与显示帧率分别统计，演示动画不代表推理速度。</p></form></dialog>
+  <dialog class="diagnostics-dialog" id="helpDialog" aria-labelledby="helpTitle"><form method="dialog" class="dialog-shell"><div class="dialog-heading"><h2 id="helpTitle">开始一次试穿</h2><button class="icon-button" aria-label="关闭使用帮助" value="close">×</button></div><ol class="help-steps"><li>选择内置样衣或上传不超过 8 MB 的服装图片；勾选保存后，衣服会保留在本机衣柜，支持收藏与重命名。</li><li>打开摄像头，允许浏览器访问。保持上半身清晰、光线均匀。</li><li>服务就绪后点击“开始连续生成”。无 GPU 时可使用本地相机和交互演示。</li><li>低延迟档直接显示原始生成帧；平滑档包含补帧，可能增加等待。</li><li>离开前关闭摄像头。保存画面与导出数字日志均由你主动操作。</li></ol><p class="dialog-intro">快速动作、衣服小字和转身背面仍可能出现错误；生成帧率与显示帧率分别统计，演示动画不代表推理速度。</p></form></dialog>
 
   <dialog class="diagnostics-dialog raw-result-dialog" id="rawResultDialog" aria-labelledby="rawResultTitle">
     <form method="dialog" class="dialog-shell">
@@ -401,6 +408,8 @@ document.querySelector("#app").innerHTML = `
     </form>
   </dialog>
 
+  <dialog class="diagnostics-dialog" id="preferencesDialog" aria-labelledby="preferencesTitle"><div class="dialog-shell"><div class="dialog-heading"><h2 id="preferencesTitle">让试衣间记住你的习惯</h2><button class="icon-button" id="closePreferences" type="button" aria-label="关闭偏好设置">×</button></div><p class="dialog-intro">偏好和衣柜仅留在当前浏览器。刷新后不会自动打开相机或开始生成。</p><label class="preference-check"><input id="rememberSelection" type="checkbox" checked /> 下次继续使用上次选择的衣服</label><label class="preference-camera" for="cameraDevice">摄像头<select id="cameraDevice"><option value="">系统默认摄像头</option></select></label><button class="button button-quiet" id="refreshCameras" type="button">刷新摄像头列表</button><p class="dialog-intro" id="cameraDeviceNote">设备选择在下次开启相机时生效；未授权时可能不显示设备名称。</p><div class="preference-summary"><strong>画面偏好会自动保存</strong><p id="savedPreferencesSummary"></p></div><button class="button button-quiet" id="resetPreferences" type="button">恢复默认偏好</button><p class="dialog-intro">仅重置偏好，不移除本机衣服和收藏。浏览器清理网站数据会移除本机衣柜。</p></div></dialog>
+  <dialog class="diagnostics-dialog" id="renameDialog" aria-labelledby="renameTitle"><form id="renameForm" class="dialog-shell"><div class="dialog-heading"><h2 id="renameTitle">给这件衣服起个名字</h2><button class="icon-button" id="closeRename" type="button" aria-label="关闭重命名">×</button></div><label class="text-field">衣服名称<input id="garmentName" type="text" maxlength="40" required autocomplete="off" /></label><p class="dialog-intro" id="renameError" role="status"></p><button class="button button-primary" type="submit">保存名称</button></form></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite">
     <span class="toast-icon"><i data-lucide="check"></i></span>
     <span id="toastText"></span>
@@ -466,10 +475,21 @@ const elements = {
   toastText: document.querySelector("#toastText"),
 };
 
+const wardrobeStore = new WardrobeStore();
+let preferences = readPreferences();
+const garmentUrls = new Map();
+let wardrobeStorageError = "";
+let selectionVersion = 0;
+const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+function savePreferences() {
+  const ok = writeSetting("vton-studio-preferences", JSON.stringify(preferences));
+  if (!ok) showToast("浏览器未允许保存偏好，本次页面仍可使用", "circle-help");
+  return ok;
+}
 const state = {
   demoMode: new URLSearchParams(location.search).get("demo") === "1",
   fullFrameService: null,
-  pipeline: new URLSearchParams(location.search).get("demo") !== "1" && localStorage.getItem("vton-pipeline") === "legacy" ? "legacy" : "full-frame",
+  pipeline: new URLSearchParams(location.search).get("demo") !== "1" && readSetting("vton-pipeline") === "legacy" ? "legacy" : "full-frame",
   selectedGarment: GARMENTS.find((garment) => garment.id === "neural-look-03") || GARMENTS[0],
   filter: "all",
   search: "",
@@ -785,14 +805,14 @@ function renderGarments() {
   const focusedId = document.activeElement?.closest(".garment-card")?.dataset.id;
   document.querySelector("#wardrobeCount").textContent = String(GARMENTS.length).padStart(2, "0");
   const filtered = GARMENTS.filter(
-    (garment) => (state.filter === "all" || (state.filter === "uploaded" ? garment.uploaded : garment.category === state.filter)) &&
+    (garment) => (state.filter === "all" || (state.filter === "uploaded" ? garment.uploaded : state.filter === "favorites" ? preferences.favorites.includes(garment.id) : garment.category === state.filter)) &&
       `${garment.localizedName} ${garment.name} ${garment.id}`.toLowerCase().includes(state.search),
   );
   const empty = document.querySelector("#wardrobeEmpty");
   empty.hidden = filtered.length > 0;
   empty.textContent = state.filter === "uploaded" && !GARMENTS.some(item => item.uploaded)
     ? "这里还没有你的衣服。上传一张参考图，开始新的试穿。"
-    : "没有找到匹配的衣服，试试其他名称。";
+    : state.filter === "favorites" && !state.search ? "还没有收藏。选中喜欢的衣服，点击“收藏衣服”。" : "没有找到匹配的衣服，试试其他名称。";
   elements.garmentList.innerHTML = filtered
     .map((garment) => {
       const index = GARMENTS.findIndex((item) => item.id === garment.id) + 1;
@@ -800,13 +820,13 @@ function renderGarments() {
       return `
         <button class="garment-card ${selected ? "is-selected" : ""}" data-id="${garment.id}" type="button" aria-pressed="${selected}">
           <span class="garment-thumb">
-            <img src="${garment.asset}" alt="${garment.localizedName}" loading="lazy" decoding="async" width="160" height="160" />
+            <img src="${escapeHtml(garment.asset)}" alt="${escapeHtml(garment.localizedName)}" loading="lazy" decoding="async" width="160" height="160" />
             <i class="garment-accent" style="--garment-accent:${garment.accent}"></i>
           </span>
           <span class="garment-info">
             <small>LOOK ${String(index).padStart(2, "0")} · ${garment.category}</small>
-            <strong>${garment.localizedName}</strong>
-            <span>${garment.uploaded ? "本次上传 · 页面内保留" : "服装参考图"}</span>
+            <strong>${escapeHtml(garment.localizedName)}</strong>
+            <span>${preferences.favorites.includes(garment.id) ? "★ 已收藏 · " : ""}${garment.uploaded ? garment.persisted ? "本机已保存" : "临时上传 · 刷新后清除" : "服装参考图"}</span>
           </span>
           <span class="garment-check"><i data-lucide="check"></i></span>
         </button>
@@ -817,6 +837,7 @@ function renderGarments() {
   elements.garmentList.scrollTop = scrollTop;
   if (focusedId) [...elements.garmentList.querySelectorAll(".garment-card")].find(card => card.dataset.id === focusedId)?.focus({ preventScroll: true });
   updateGarmentSelection();
+  updateWardrobeStorage();
 }
 
 function updateGarmentSelection() {
@@ -827,8 +848,14 @@ function updateGarmentSelection() {
   }
   document.querySelector("#selectedReferenceImage").src = state.selectedGarment.asset;
   document.querySelector("#selectedReferenceName").textContent = state.selectedGarment.localizedName;
-  document.querySelector("#selectedReferenceMeta").textContent = state.selectedGarment.uploaded ? "本次上传 · 刷新后清除" : `LOOK ${String(GARMENTS.indexOf(state.selectedGarment) + 1).padStart(2, "0")} · 内置样衣`;
+  document.querySelector("#selectedReferenceMeta").textContent = state.selectedGarment.uploaded ? state.selectedGarment.persisted ? "本机衣柜 · 刷新后可继续使用" : "临时上传 · 刷新后清除" : `LOOK ${String(GARMENTS.indexOf(state.selectedGarment) + 1).padStart(2, "0")} · 内置样衣`;
   document.querySelector("#removeUploadedGarment").hidden = !state.selectedGarment.uploaded;
+  document.querySelector("#renameGarment").hidden = !state.selectedGarment.uploaded;
+  document.querySelector("#saveGarment").hidden = !state.selectedGarment.uploaded || Boolean(state.selectedGarment.persisted);
+  const favorite = preferences.favorites.includes(state.selectedGarment.id);
+  document.querySelector("#favoriteGarment").textContent = favorite ? "★ 已收藏" : "☆ 收藏衣服";
+  document.querySelector("#favoriteGarment").setAttribute("aria-pressed", String(favorite));
+  for (const id of ["saveGarment", "renameGarment", "removeUploadedGarment"]) document.querySelector(`#${id}`).disabled = Boolean(state.selectedGarment.busy);
 }
 
 elements.garmentList.addEventListener("click", event => {
@@ -854,6 +881,8 @@ async function selectGarment(id) {
   state.lastAutoGarmentId = null;
   state.personVisibleSince = 0;
   state.selectedGarment = garment;
+  selectionVersion++;
+  if (preferences.rememberSelection) writeSetting("vton-last-garment", garment.id);
   const index = GARMENTS.findIndex((item) => item.id === id) + 1;
   elements.activeGarmentIndex.textContent = String(index).padStart(2, "0");
   elements.activeGarmentName.textContent = garment.name;
@@ -1000,6 +1029,33 @@ function syncStudioState() {
   document.querySelector("#pauseOverlay").hidden = !state.paused;
   document.querySelector("#pauseOverlay small").textContent = cameraOn ? "摄像头仍开启；可恢复预览或关闭摄像头" : "点击播放按钮，恢复预览";
   if (!lastFullFrame) document.querySelector("#previewModeLabel").textContent = cameraOn ? "本地相机预览 / 尚未生成" : "交互演示 / 非 AI 输出";
+  updateNextStep();
+}
+
+function updateNextStep() {
+  let title, detail, action, label;
+  if (state.cameraError) {
+    title = "摄像头还未连接"; detail = state.cameraError; action = "camera"; label = "重试摄像头";
+  } else if (state.paused) {
+    title = "预览已暂停"; detail = "恢复预览后，可以手动开始试穿。"; action = "resume"; label = "继续预览";
+  } else if (engine.source !== "camera") {
+    title = "参考衣服已选好，下一步打开相机"; detail = "先查看本地预览；打开相机不会自动发送画面。"; action = "camera"; label = "开启本地预览";
+  } else if (state.pipeline !== "full-frame") {
+    title = "当前为旧版对照模式"; detail = "此模式使用衣层贴片；可在高级选项切换完整画面生成。"; action = "help"; label = "查看使用帮助";
+  } else if (fullFrame?.running) {
+    title = "正在生成试穿画面"; detail = "选择其他衣服可切换参考；离开前可停止生成并关闭相机。"; action = "stop"; label = "停止生成";
+  } else if (!state.fullFrameService?.ready) {
+    title = "本地相机已就绪，AI 服务尚未连接"; detail = state.demoMode ? "当前为免 GPU 演示，画面尚未进行 AI 换衣。" : "可继续管理衣柜；隧道与服务就绪后重新检查。"; action = "service"; label = state.demoMode ? "连接真实 AI 服务" : "重新检查服务";
+  } else {
+    title = "相机与服务均已就绪"; detail = `已选择“${state.selectedGarment.localizedName}”，点击后开始传输相机帧并生成。`; action = "generate"; label = "开始试穿";
+  }
+  const signature = [title, detail, action, label].join("\n");
+  if (updateNextStep.signature === signature) return;
+  updateNextStep.signature = signature;
+  document.querySelector("#nextStepTitle").textContent = title;
+  document.querySelector("#nextStepDetail").textContent = detail;
+  const button = document.querySelector("#nextStepAction");
+  button.dataset.action = action; button.textContent = label;
 }
 
 fullFrame = new FullFrameClient({
@@ -1082,6 +1138,7 @@ function setServiceNotice(title, detail, status) {
   document.querySelector("#retryService").textContent = state.demoMode ? "连接真实 AI 服务" : "重新检查服务";
   document.querySelector("#fullFrameButton").disabled = ["demo", "offline", "loading"].includes(status) && !fullFrame?.running;
   document.querySelector("#fullFrameButton").title = status === "demo" ? "连接真实 AI 服务后可开始生成" : status === "offline" ? "请先重新检查并连接 AI 服务" : "";
+  updateNextStep();
 }
 
 async function checkFullFrameService() {
@@ -1163,7 +1220,7 @@ function applyPipeline() {
 
 document.querySelector("#tryonPipeline").addEventListener("change", (event) => {
   state.pipeline = event.target.value;
-  localStorage.setItem("vton-pipeline", state.pipeline);
+  writeSetting("vton-pipeline", state.pipeline);
   applyPipeline();
 });
 document.querySelector("#fullFrameButton").addEventListener("click", () => {
@@ -1173,16 +1230,36 @@ document.querySelector("#fullFrameButton").addEventListener("click", () => {
     fullFrameStatus("idle", "生成已停止，当前显示原始摄像头");
   } else void startFullFrame();
 });
-let uploadedGarmentUrl = null;
 let garmentUploadSequence = 0;
+function updateWardrobeStorage() {
+  const saved = GARMENTS.filter(garment => garment.persisted);
+  const bytes = saved.reduce((sum, garment) => sum + (garment.blob?.size || 0), 0);
+  const label = document.querySelector("#wardrobeStorage");
+  label.textContent = wardrobeStorageError || `本机衣柜 ${saved.length}/${WARDROBE_LIMIT} 件 · ${(bytes / 1024 / 1024).toFixed(1)} / 32 MB · 仅当前浏览器可见`;
+  label.dataset.error = String(Boolean(wardrobeStorageError));
+}
+function makeUploadedGarment(record, persisted = false) {
+  const url = URL.createObjectURL(record.blob);
+  garmentUrls.set(record.id, url);
+  return { id: record.id, name: record.name, localizedName: record.name, category: "上装", asset: url, uploaded: true,
+    persisted, blob: record.blob, createdAt: record.createdAt, accent: "#d8ff58", type: "shirt", widthScale: 1, lengthScale: 0.12, drape: 1 };
+}
+async function saveUploadedGarment(garment) {
+  await wardrobeStore.put({ id: garment.id, name: garment.localizedName, blob: garment.blob, createdAt: garment.createdAt });
+  garment.persisted = true; wardrobeStorageError = "";
+}
 async function uploadGarment(file) {
   if (!file) return;
   const sequence = ++garmentUploadSequence;
   const message = document.querySelector("#garmentUploadStatus");
+  const button = document.querySelector("#uploadGarmentButton");
   try {
+    await wardrobeReady;
+    if (GARMENTS.filter(garment => garment.uploaded).length >= WARDROBE_LIMIT) throw new Error(`最多添加 ${WARDROBE_LIMIT} 件上传衣服，请先移除不需要的衣服`);
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 8 * 1024 * 1024) {
       throw new Error("请选择不超过 8 MB 的 JPG、PNG 或 WebP 衣服照片");
     }
+    button.disabled = true; message.textContent = "正在处理衣服图片…";
     const image = await createImageBitmap(file);
     const scale = Math.min(1, 1024 / Math.max(image.width, image.height));
     const canvas = document.createElement("canvas");
@@ -1193,12 +1270,18 @@ async function uploadGarment(file) {
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.94));
     if (sequence !== garmentUploadSequence) return;
     if (!blob) throw new Error("衣服照片转换失败");
-    const oldUrl = uploadedGarmentUrl;
-    uploadedGarmentUrl = URL.createObjectURL(blob);
-    const old = GARMENTS.findIndex((garment) => garment.uploaded);
-    if (old >= 0) GARMENTS.splice(old, 1);
-    const garment = { id: `uploaded-${crypto.randomUUID()}`, name: "Custom Garment", localizedName: "自定义衣服",
-      category: "上装", asset: uploadedGarmentUrl, uploaded: true, accent: "#d8ff58", type: "shirt", widthScale: 1, lengthScale: 0.12, drape: 1 };
+    const name = file.name.replace(/\.[^.]+$/, "").trim().slice(0, 40) || "自定义衣服";
+    const garment = makeUploadedGarment({ id: `uploaded-${crypto.randomUUID()}`, name, blob, createdAt: Date.now() });
+    let saveError = "";
+    if (preferences.saveUploads) {
+      try { await saveUploadedGarment(garment); }
+      catch (error) { wardrobeStorageError = error.message; saveError = error.message; }
+    }
+    if (sequence !== garmentUploadSequence) {
+      if (garment.persisted) GARMENTS.push(garment);
+      else { URL.revokeObjectURL(garment.asset); garmentUrls.delete(garment.id); }
+      renderGarments(); return;
+    }
     GARMENTS.push(garment);
     state.filter = "all"; state.search = "";
     document.querySelector("#garmentSearch").value = "";
@@ -1207,12 +1290,12 @@ async function uploadGarment(file) {
       chip.setAttribute("aria-pressed", String(chip.dataset.filter === "all"));
     }
     await selectGarment(garment.id);
-    if (oldUrl) URL.revokeObjectURL(oldUrl);
-    message.textContent = "自定义衣服已选择；样衣仅在本次页面保留，点击开始即可试穿";
+    renderGarments();
+    message.textContent = saveError ? `${saveError}；衣服仍可临时试穿，刷新后会清除，可点击“保存到本机”重试。` : garment.persisted ? "已保存到本机衣柜；刷新后仍可使用，也可以继续上传其他衣服。" : "已临时添加；刷新后清除。需要保留时点击“保存到本机”。";
   } catch (error) {
     message.textContent = error.message;
     showToast(error.message, "circle-help");
-  } finally { document.querySelector("#garmentUpload").value = ""; }
+  } finally { if (sequence === garmentUploadSequence) { button.disabled = false; document.querySelector("#garmentUpload").value = ""; } }
 }
 document.querySelector("#garmentUpload").addEventListener("change", event => void uploadGarment(event.target.files?.[0]));
 document.querySelector("#uploadGarmentButton").addEventListener("click", () => document.querySelector("#garmentUpload").click());
@@ -1226,31 +1309,37 @@ dropZone.addEventListener("drop", event => {
   void uploadGarment(event.dataTransfer?.files?.[0]);
 });
 document.querySelector("#removeUploadedGarment").addEventListener("click", async () => {
-  ++garmentUploadSequence;
-  const index = GARMENTS.findIndex(garment => garment.uploaded);
-  if (index < 0) return;
-  GARMENTS.splice(index, 1);
-  await selectGarment((GARMENTS.find(garment => garment.id === "neural-look-03") || GARMENTS[0]).id);
-  if (uploadedGarmentUrl) URL.revokeObjectURL(uploadedGarmentUrl);
-  uploadedGarmentUrl = null;
-  document.querySelector("#garmentUploadStatus").textContent = "已移除上传衣服；可选择新的 JPG、PNG 或 WebP 图片（最大 8 MB）。";
-  renderGarments();
+  const garment = state.selectedGarment;
+  if (!garment.uploaded || garment.busy) return;
+  if (garment.persisted && !window.confirm(`从本机衣柜移除“${garment.localizedName}”？原始图片文件不会删除。`)) return;
+  garment.busy = true; updateGarmentSelection();
+  try {
+    if (garment.persisted) await wardrobeStore.remove(garment.id);
+    const index = GARMENTS.indexOf(garment);
+    if (index >= 0) GARMENTS.splice(index, 1);
+    preferences.favorites = preferences.favorites.filter(id => id !== garment.id); savePreferences();
+    if (state.selectedGarment.id === garment.id) await selectGarment((GARMENTS.find(item => item.id === "neural-look-03") || GARMENTS[0]).id);
+    URL.revokeObjectURL(garment.asset); garmentUrls.delete(garment.id);
+    document.querySelector("#garmentUploadStatus").textContent = "已移除这件上传衣服，其他衣服仍保留。";
+    renderGarments();
+  } catch (error) { showToast(error.message, "circle-help"); }
+  finally { garment.busy = false; updateGarmentSelection(); }
 });
 const fullFrameDisplay = document.querySelector("#fullFrameDisplay");
 const fullFrameProfile = document.querySelector("#fullFrameProfile");
-const storedGenerationProfile = localStorage.getItem("vton-generation-profile");
+const storedGenerationProfile = readSetting("vton-generation-profile");
 fullFrameProfile.value = ["fast", "balanced", "detail"].includes(storedGenerationProfile) ? storedGenerationProfile : "fast";
 fullFrameProfile.addEventListener("change", () => {
-  localStorage.setItem("vton-generation-profile", fullFrameProfile.value);
+  writeSetting("vton-generation-profile", fullFrameProfile.value);
   const running = fullFrame.running;
   fullFrame.stop();
   lastFullFrame = null;
   updateGenerationPreference();
   if (running && engine.source === "camera") void startFullFrame();
 });
-fullFrameDisplay.value = localStorage.getItem("vton-display-mode") === "low-latency" ? "low-latency" : "smooth";
+fullFrameDisplay.value = readSetting("vton-display-mode") === "low-latency" ? "low-latency" : "smooth";
 fullFrameDisplay.addEventListener("change", () => {
-  localStorage.setItem("vton-display-mode", fullFrameDisplay.value);
+  writeSetting("vton-display-mode", fullFrameDisplay.value);
   const running = fullFrame.running;
   fullFrame.stop();
   lastFullFrame = null;
@@ -1258,6 +1347,7 @@ fullFrameDisplay.addEventListener("change", () => {
   if (running && engine.source === "camera") void startFullFrame();
 });
 function updateGenerationPreference() {
+  document.querySelector("#savedPreferencesSummary").textContent = `${fullFrameProfile.selectedOptions[0].textContent} · ${fullFrameDisplay.selectedOptions[0].textContent}`;
   document.querySelector("#generationPreferenceNote").textContent = (fullFrameProfile.value === "fast" ? "流畅优先会减少小字与纹理细节。" : fullFrameProfile.value === "detail" ? "细节优先可能增加生成等待。" : "均衡兼顾速度与细节。") + (fullFrameDisplay.value === "smooth" ? "补帧让显示更连续，也会增加等待。" : "直接显示最新原帧，优先减少显示等待。");
 }
 updateGenerationPreference();
@@ -1271,6 +1361,7 @@ async function startCamera() {
   return cameraStartPromise;
 }
 async function openCamera() {
+  state.cameraError = "";
   const buttons = [
     document.querySelector("#startCameraButton"),
     document.querySelector("#topCameraButton"),
@@ -1282,7 +1373,13 @@ async function openCamera() {
   elements.cameraPrompt.classList.add("is-loading");
 
   try {
-    await engine.startCamera();
+    try { await engine.startCamera(preferences.cameraId || null); }
+    catch (error) {
+      if (!preferences.cameraId || !["OverconstrainedError", "NotFoundError"].includes(error?.name)) throw error;
+      preferences.cameraId = ""; savePreferences();
+      await engine.startCamera();
+      showToast("上次选择的摄像头不可用，已使用系统默认摄像头", "camera");
+    }
     state.paused = false; engine.resumeRendering();
     document.querySelector("#togglePauseButton").innerHTML = '<i data-lucide="pause"></i>';
     elements.cameraPrompt.classList.add("is-hidden");
@@ -1295,6 +1392,7 @@ async function openCamera() {
     topButton.classList.add("is-camera-off");
     createIcons({ icons: ICONS });
     showToast(state.pipeline === "full-frame" ? "摄像头已连接，当前为本地预览" : "摄像头已连接，开始实时试衣", "camera");
+    void refreshCameraDevices();
     void refreshAiServiceStatus({ quiet: true });
     document.querySelector("#previewModeLabel").textContent = "本地相机预览 / 尚未生成";
   } catch (error) {
@@ -1303,6 +1401,7 @@ async function openCamera() {
     elements.cameraPrompt.classList.remove("is-hidden");
     const permissionDenied =
       error?.name === "NotAllowedError" || /permission|denied/i.test(error?.message ?? "");
+    state.cameraError = permissionDenied ? "请在浏览器地址栏的网站权限中允许使用摄像头，再重试。" : error?.name === "NotReadableError" ? "摄像头可能被其他程序占用，请关闭占用程序后重试。" : error?.name === "NotFoundError" ? "未找到可用摄像头，请连接设备，或在偏好设置中选择其他摄像头。" : `无法启动相机：${error.message}`;
     showToast(
       permissionDenied ? "摄像头权限被拒绝，请允许后重试" : `摄像头启动失败：${error.message}`,
       "camera-off",
@@ -1318,6 +1417,7 @@ async function openCamera() {
 }
 
 function stopCamera() {
+  state.cameraError = "";
   fullFrame?.stop();
   lastFullFrame = null;
   if (state.pipeline === "full-frame") fullFrameStatus("idle", "摄像头已关闭");
@@ -1541,7 +1641,7 @@ function connectRemote() {
     elements.connectRemote.innerHTML = '<i data-lucide="wifi-off"></i><span>断开</span>';
     elements.runRemoteTest.disabled = false;
     createIcons({ icons: ICONS });
-    localStorage.setItem("vton-remote-url", elements.remoteUrl.value);
+    writeSetting("vton-remote-url", elements.remoteUrl.value);
     showToast("远程推理服务连接成功", "wifi");
   });
 
@@ -1600,7 +1700,7 @@ async function runRemoteProbe() {
   }
 }
 
-elements.remoteUrl.value = localStorage.getItem("vton-remote-url") || "ws://127.0.0.1:8010/ws";
+elements.remoteUrl.value = readSetting("vton-remote-url") || "ws://127.0.0.1:8010/ws";
 
 function openDiagnostics() {
   elements.diagnosticsDialog.showModal();
@@ -1623,7 +1723,7 @@ elements.diagnosticsDialog.addEventListener("click", (event) => {
 });
 
 window.addEventListener("beforeunload", () => {
-  if (uploadedGarmentUrl) URL.revokeObjectURL(uploadedGarmentUrl);
+  for (const url of garmentUrls.values()) URL.revokeObjectURL(url);
   fullFrame?.stop();
   fullFrame?.log.destroy();
   engine.destroy();
@@ -1699,3 +1799,102 @@ document.addEventListener("visibilitychange", () => {
     fullFrameStatus("idle", "页面已转入后台，连续生成已停止；返回后可手动开始");
   }
 });
+
+document.querySelector("#favoriteGarment").addEventListener("click", () => {
+  const id = state.selectedGarment.id;
+  preferences.favorites = preferences.favorites.includes(id) ? preferences.favorites.filter(item => item !== id) : [...preferences.favorites, id];
+  savePreferences(); renderGarments();
+});
+document.querySelector("#saveGarment").addEventListener("click", async event => {
+  const button = event.currentTarget, garment = state.selectedGarment;
+  if (!garment.uploaded || garment.persisted || garment.busy) return;
+  garment.busy = true; updateGarmentSelection();
+  try { await saveUploadedGarment(garment); renderGarments(); showToast("衣服已保存到本机，刷新后仍可使用"); }
+  catch (error) { wardrobeStorageError = error.message; updateWardrobeStorage(); showToast(`${error.message}；当前仍可临时使用`, "circle-help"); }
+  finally { garment.busy = false; updateGarmentSelection(); }
+});
+let renameTarget = null;
+document.querySelector("#renameGarment").addEventListener("click", () => {
+  renameTarget = state.selectedGarment;
+  document.querySelector("#garmentName").value = renameTarget.localizedName;
+  document.querySelector("#renameError").textContent = "";
+  document.querySelector("#renameDialog").showModal(); document.querySelector("#garmentName").select();
+});
+document.querySelector("#closeRename").addEventListener("click", () => document.querySelector("#renameDialog").close());
+document.querySelector("#renameForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const garment = renameTarget, name = document.querySelector("#garmentName").value.trim().slice(0, 40);
+  if (!garment || !name) { document.querySelector("#renameError").textContent = "请输入 1–40 个字符的名称。"; return; }
+  if (garment.busy) return;
+  garment.busy = true; updateGarmentSelection();
+  const submit = event.currentTarget.querySelector('[type="submit"]'); submit.disabled = true;
+  try {
+    if (garment.persisted) await wardrobeStore.put({ id: garment.id, name, blob: garment.blob, createdAt: garment.createdAt });
+    garment.localizedName = name; garment.name = name;
+    if (garment === state.selectedGarment) elements.activeGarmentName.textContent = name;
+    renderGarments(); updateNextStep(); document.querySelector("#renameDialog").close();
+  } catch (error) { document.querySelector("#renameError").textContent = error.message; }
+  finally { garment.busy = false; updateGarmentSelection(); submit.disabled = false; }
+});
+const saveUploads = document.querySelector("#saveUploads");
+saveUploads.checked = preferences.saveUploads;
+saveUploads.addEventListener("change", () => { preferences.saveUploads = saveUploads.checked; savePreferences(); });
+const rememberSelection = document.querySelector("#rememberSelection");
+rememberSelection.checked = preferences.rememberSelection;
+rememberSelection.addEventListener("change", () => {
+  preferences.rememberSelection = rememberSelection.checked;
+  writeSetting("vton-last-garment", rememberSelection.checked ? state.selectedGarment.id : ""); savePreferences();
+});
+document.querySelector("#openPreferences").addEventListener("click", () => { document.querySelector("#preferencesDialog").showModal(); void refreshCameraDevices(); });
+document.querySelector("#closePreferences").addEventListener("click", () => document.querySelector("#preferencesDialog").close());
+async function refreshCameraDevices() {
+  const select = document.querySelector("#cameraDevice"), note = document.querySelector("#cameraDeviceNote");
+  try {
+    if (!navigator.mediaDevices?.enumerateDevices) throw new Error("当前浏览器不支持设备列表");
+    const cameras = (await navigator.mediaDevices.enumerateDevices()).filter(device => device.kind === "videoinput" && device.deviceId);
+    select.replaceChildren(new Option("系统默认摄像头", ""));
+    cameras.forEach((device, index) => select.add(new Option(device.label || `摄像头 ${index + 1}`, device.deviceId)));
+    if (preferences.cameraId && !cameras.some(device => device.deviceId === preferences.cameraId)) select.add(new Option("上次选择的设备（当前不可见）", preferences.cameraId));
+    select.value = preferences.cameraId;
+    note.textContent = cameras.length ? "选择在下次开启相机时生效，不会中断当前预览。" : "尚未发现可用设备；允许相机权限后刷新列表，不会自动开启相机。";
+  } catch (error) { note.textContent = `${error.message}；仍可尝试系统默认摄像头。`; }
+}
+document.querySelector("#refreshCameras").addEventListener("click", () => void refreshCameraDevices());
+document.querySelector("#cameraDevice").addEventListener("change", event => { preferences.cameraId = event.target.value; savePreferences(); });
+document.querySelector("#resetPreferences").addEventListener("click", () => {
+  const running = fullFrame.running;
+  fullFrame.stop(); lastFullFrame = null;
+  preferences = { ...preferences, saveUploads: true, rememberSelection: true, cameraId: "" }; savePreferences();
+  saveUploads.checked = true; rememberSelection.checked = true;
+  writeSetting("vton-last-garment", state.selectedGarment.id);
+  fullFrameProfile.value = "fast"; fullFrameDisplay.value = "smooth";
+  writeSetting("vton-generation-profile", "fast"); writeSetting("vton-display-mode", "smooth");
+  updateGenerationPreference(); void refreshCameraDevices();
+  fullFrameStatus("idle", running ? "偏好已重置，可手动重新开始生成" : "默认偏好已恢复");
+  showToast("已恢复默认偏好，衣柜和收藏仍保留");
+});
+document.querySelector("#nextStepAction").addEventListener("click", event => {
+  const action = event.currentTarget.dataset.action;
+  if (action === "camera") void startCamera();
+  else if (action === "resume") document.querySelector("#togglePauseButton").click();
+  else if (action === "service") document.querySelector("#retryService").click();
+  else if (action === "generate") void startFullFrame();
+  else if (action === "stop") document.querySelector("#fullFrameButton").click();
+  else document.querySelector("#helpDialog").showModal();
+});
+for (const id of ["preferencesDialog", "renameDialog"]) document.querySelector(`#${id}`).addEventListener("click", event => { if (event.target === event.currentTarget) event.currentTarget.close(); });
+const wardrobeReady = (async () => {
+  const originalSelection = selectionVersion;
+  const lastId = preferences.rememberSelection ? readSetting("vton-last-garment") : null;
+  try {
+    const records = await wardrobeStore.list();
+    for (const record of records.sort((a, b) => a.createdAt - b.createdAt)) {
+      if (!GARMENTS.some(garment => garment.id === record.id)) GARMENTS.push(makeUploadedGarment(record, true));
+    }
+    wardrobeStorageError = "";
+  } catch (error) { wardrobeStorageError = `${error.message}；可临时上传试穿，刷新后清除。`; }
+  renderGarments();
+  if (selectionVersion === originalSelection && lastId && GARMENTS.some(garment => garment.id === lastId)) await selectGarment(lastId);
+  updateNextStep();
+})();
+window.__VTON_DEBUG__.wardrobeReady = wardrobeReady;

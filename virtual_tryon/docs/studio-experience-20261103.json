@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-03",
+  "scope": "Local wardrobe persistence, favorites, names, preferences and actionable studio guidance",
+  "features": {
+    "wardrobe_storage": "IndexedDB; normalized garment reference blobs only",
+    "max_uploaded_garments": 20,
+    "max_stored_garment_bytes": 33554432,
+    "max_input_file_bytes": 8388608,
+    "temporary_upload_option": true,
+    "favorites_and_rename": true,
+    "confirm_saved_garment_removal": true,
+    "remember_selection_optional": true,
+    "camera_selection_next_start": true,
+    "reset_preferences_preserves_wardrobe": true,
+    "auto_start_camera_or_generation_after_reload": false
+  },
+  "verification": {
+    "playwright_final_run": { "passed": 41, "failed": 0, "duration_reported": "1.2 minutes" },
+    "new_persistence_workflows": 5,
+    "visual_review_viewports": [[1440, 1000], [390, 844], [320, 780]],
+    "blocked_indexeddb_falls_back_to_explicit_temporary_upload": true,
+    "rename_text_does_not_create_html": true,
+    "persisted_multiple_uploads_switch_generation_reference": true,
+    "existing_latest_frame_and_worker_regressions_pass": true,
+    "production_build": "passed"
+  },
+  "limits": [
+    "Wardrobe belongs to the same browser and origin; clearing site data removes it",
+    "No cloud account or cross-device synchronization",
+    "Camera and generated frames are not persisted in the wardrobe",
+    "No remote GPU started and no new real-person inference performance measurement",
+    "No claim that motion artifacts, back-view pattern correctness or remote latency are fixed",
+    "Word documents were not regenerated in this UI iteration"
+  ]
+}
